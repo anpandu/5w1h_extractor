@@ -6,7 +6,7 @@ class MDP(object):
 	def __init__(self):
 		self.conn = MySQLdb.connect(host="localhost", 
 		                     user="tugasakhir", 
-		                     passwd="xxx", 
+		                     passwd="belumselesai", 
 		                     db="tugasakhir")
 		self.cur = self.conn.cursor()
 
@@ -26,11 +26,9 @@ class MDP(object):
 			return []
 			self.conn.rollback()
 
-	# def getData(self, limit=0):
-	# 	if (limit==0):
-	# 		return self.getQuery123("SELECT * FROM clean_data")
-	# 	else:
-	# 		return self.getQuery123("SELECT * FROM clean_data LIMIT 0,%d" % (limit))
+	def get5w1h(self, limit=0):
+		if (limit==0):
+			return self.getQuery("SELECT 5w1hs.what, 5w1hs.who, 5w1hs.when, 5w1hs.where, 5w1hs.why, 5w1hs.how, articles.text, articles.title FROM 5w1hs, articles WHERE 5w1hs.article_id = articles.id AND user_id=6")
 
 
 
