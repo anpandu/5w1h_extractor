@@ -1,4 +1,4 @@
-from nltk.tokenize import word_tokenize
+# from nltk.tokenize import word_tokenize
 import re
 
 
@@ -32,6 +32,12 @@ class Tokenizer(object):
 		res = self.removeSymbol(res)
 		res = self.stripSymbol(res)
 		res = self.removeDigit(res)
+		return res
+
+	def getSentenceFromText(self, str):
+		res = str.split('. ')
+		res = [item.split(' - ') for item in res]
+		res = [item for sublist in res for item in sublist]
 		return res
 
 	def removeStopWords(self, words, stopwords):
