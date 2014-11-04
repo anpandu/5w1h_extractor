@@ -40,18 +40,18 @@ class Tokenizer(object):
 		return rawtokens
 
 	def getTerms(self, str): # !!! kata 'dan' pas terakhir
-		rawtokens = self.getTokens(str)
+		tokens = self.getTokens(str)
 		terms = []
 		temp = []
-		for rawtoken in rawtokens:
-			if ((rawtoken[0].isupper() or (rawtoken in self.entityjoin)) and (rawtoken not in self.entityjoinexception)):
-				temp.append(rawtoken)
+		for token in tokens:
+			if ((token[0].isupper()) and (token not in self.entityjoinexception)):
+				temp.append(token)
 			elif (len(temp)>0):
 				terms.append(' '.join(temp))
 				temp = []
-				terms.append(rawtoken)
+				terms.append(token)
 			else: 
-				terms.append(rawtoken)
+				terms.append(token)
 		return terms
 
 	def getSentenceFromText(self, str):
