@@ -1,4 +1,3 @@
-from nltk.tokenize import word_tokenize
 import re
 
 
@@ -8,13 +7,8 @@ class Tokenizer(object):
 		self.entityjoin = ['dan', 'untuk']
 		self.entityjoinexception = ['Rp']
 
-	def tokenize(self, str):
-		res = word_tokenize(str) # !!! :
-		return res
-
-	def tokenize2(self, str): # !!! kata 'dan' pas terakhir
-		rawtokens = str.split(' ')
-		
+	def getTokens(self, str): # !!! kata 'dan' pas terakhir
+		rawtokens = str.split(' ')		
 		# split non-alnum first char of token
 		again = True
 		while again:
@@ -29,7 +23,6 @@ class Tokenizer(object):
 			again = False
 			for i, rawtoken in enumerate(rawtokens):
 				again = again or (not rawtoken[0].isalnum() and len(rawtoken)>1)
-		
 		# split non-alnum last char of token
 		again = True
 		while again:
@@ -44,20 +37,22 @@ class Tokenizer(object):
 			again = False
 			for i, rawtoken in enumerate(rawtokens):
 				again = again or (not rawtoken[-1].isalnum() and len(rawtoken)>1)
+		return rawtokens
 
-		# join uppercased words to one word/token
-		tokens = []
+	def getTerms(self, str): # !!! kata 'dan' pas terakhir
+		rawtokens = self.getTokens(str)
+		terms = []
 		temp = []
 		for rawtoken in rawtokens:
 			if ((rawtoken[0].isupper() or (rawtoken in self.entityjoin)) and (rawtoken not in self.entityjoinexception)):
 				temp.append(rawtoken)
 			elif (len(temp)>0):
-				tokens.append(' '.join(temp))
+				terms.append(' '.join(temp))
 				temp = []
-				tokens.append(rawtoken)
+				terms.append(rawtoken)
 			else: 
-				tokens.append(rawtoken)
-		return tokens
+				terms.append(rawtoken)
+		return terms
 
 	def getSentenceFromText(self, str):
 		res = str.split('. ')
