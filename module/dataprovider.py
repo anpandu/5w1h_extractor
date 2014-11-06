@@ -27,8 +27,15 @@ class MDP(object):
 			return []
 			self.conn.rollback()
 
-	def get5w1h(self, limit=0):
-		que_res = self.getQuery("SELECT 5w1hs.what, 5w1hs.who, 5w1hs.when, 5w1hs.where, 5w1hs.why, 5w1hs.how, articles.text, articles.title FROM 5w1hs, articles WHERE 5w1hs.article_id = articles.id AND user_id=6")
+	def get5w1h(self, ids=[]):
+		ids = [str(i) for i in ids]
+		res = []
+		for uid in ids:
+			res += self._get5w1h(uid)
+		return res
+
+	def _get5w1h(self, uid):
+		que_res = self.getQuery("SELECT 5w1hs.what, 5w1hs.who, 5w1hs.when, 5w1hs.where, 5w1hs.why, 5w1hs.how, articles.text, articles.title FROM 5w1hs, articles WHERE 5w1hs.article_id = articles.id AND user_id=%s" % (uid))
 		res = [Info5W1H(item[0], item[1], item[2], item[3], item[4], item[5], item[6]) for item in que_res]
 		return res
 
