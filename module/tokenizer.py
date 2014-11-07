@@ -54,10 +54,13 @@ class Tokenizer(object):
 				terms.append(token)
 		return terms
 
-	def getSentenceFromText(self, str):
+	def getSentence(self, str):
 		res = str.split('. ')
 		res = [item.split(' - ') for item in res]
 		res = [item for sublist in res for item in sublist]
+		# remove dot in last char of last sentence
+		last_sentence = res[len(res)-1]
+		res[len(res)-1] = last_sentence[:-1] if (last_sentence[-1]=='.') else last_sentence
 		return res
 
 	def removeNonAscii(self, str):
