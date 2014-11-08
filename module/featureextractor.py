@@ -8,25 +8,26 @@ class FeatureExtractor(object):
 
 	def freq(self, word, doc):
 		doc_tokens = self.tokenizer.getTokens(doc)
-		res = 0
-		for doc_token in doc_tokens:
-			res += 1 if (doc_token==word) else 0
-		return res
+		word_tokens = self.tokenizer.getTokens(word)
+		return len(self._getTokenIdx(word_tokens, doc_tokens))
 
 	def prevToken(self, word, doc):
 		doc_tokens = self.tokenizer.getTokens(doc)
-		res = []
-		for i, doc_token in enumerate(doc_tokens):
-			if (doc_token==word and i>0):
-				res.append(doc_tokens[i-1])
+		word_tokens = self.tokenizer.getTokens(word)
+		idxs = self._getTokenIdx(word_tokens, doc_tokens)
+		res = [doc_tokens[idx-1] if idx>0 else "_begin_" for idx in idxs]
 		return res
 
 	def nextToken(self, word, doc):
 		doc_tokens = self.tokenizer.getTokens(doc)
-		limit = len(doc_tokens)
-		res = []
-		for i, doc_token in enumerate(doc_tokens):
-			if (doc_token==word and i<limit-1):
-				res.append(doc_tokens[i+1])
+		word_tokens = self.tokenizer.getTokens(word)
+		idxs = self._getTokenIdx(word_tokens, doc_tokens)
+		res = [doc_tokens[idx+len(word_tokens)] if idx<len(doc_tokens)-1 else "_end_" for idx in idxs]
 		return res
 
+	def _getTokenIdx(self, needles, hays):
+		res = []
+		for i, hay in enumerate(hays):
+			if (needles==hays[i:i+len(needles)]):
+				res.append(i)
+		return res

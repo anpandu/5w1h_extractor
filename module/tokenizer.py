@@ -7,7 +7,7 @@ class Tokenizer(object):
 		self.entityjoin = ['dan', 'untuk']
 		self.entityjoinexception = ['Rp']
 
-	def getTokens(self, str): # !!! kata 'dan' pas terakhir
+	def getTokens(self, str): # !!! karakter null / ''
 		rawtokens = str.split(' ')		
 		# split non-alnum first char of token
 		again = True
