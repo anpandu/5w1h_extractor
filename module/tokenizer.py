@@ -7,36 +7,44 @@ class Tokenizer(object):
 		self.entityjoin = ['dan', 'untuk']
 		self.entityjoinexception = ['Rp']
 
-	def getTokens(self, str): # !!! karakter null / ''
+	def getTokens(self, str): # !!! kata 'dan' pas terakhir
 		rawtokens = str.split(' ')		
 		# split non-alnum first char of token
 		again = True
 		while again:
 			rawtokens2 = []
 			for i, rawtoken in enumerate(rawtokens):
-				if (not rawtoken[0].isalnum() and len(rawtoken)>1):
-					rawtokens2.append(rawtoken[0])
-					rawtokens2.append(rawtoken[1:])
-				else: 
+				if len(rawtoken)>1:
+					if (not rawtoken[0].isalnum()):
+						rawtokens2.append(rawtoken[0])
+						rawtokens2.append(rawtoken[1:])
+					else: 
+						rawtokens2.append(rawtoken)
+				else:
 					rawtokens2.append(rawtoken)
 			rawtokens = rawtokens2
 			again = False
 			for i, rawtoken in enumerate(rawtokens):
-				again = again or (not rawtoken[0].isalnum() and len(rawtoken)>1)
+				if len(rawtoken)>1:
+					again = again or (not rawtoken[0].isalnum())
 		# split non-alnum last char of token
 		again = True
 		while again:
 			rawtokens2 = []
 			for i, rawtoken in enumerate(rawtokens):
-				if (not rawtoken[-1].isalnum() and len(rawtoken)>1):
-					rawtokens2.append(rawtoken[:-1])
-					rawtokens2.append(rawtoken[-1])
-				else: 
+				if len(rawtoken)>1:
+					if (not rawtoken[-1].isalnum()):
+						rawtokens2.append(rawtoken[:-1])
+						rawtokens2.append(rawtoken[-1])
+					else: 
+						rawtokens2.append(rawtoken)
+				else:
 					rawtokens2.append(rawtoken)
 			rawtokens = rawtokens2
 			again = False
 			for i, rawtoken in enumerate(rawtokens):
-				again = again or (not rawtoken[-1].isalnum() and len(rawtoken)>1)
+				if len(rawtoken)>1:
+					again = again or (not rawtoken[-1].isalnum())
 		return rawtokens
 
 	def getTerms(self, str): # !!! kata 'dan' pas terakhir
