@@ -1,5 +1,5 @@
 
-from module.tokenizer import Tokenizer
+from tokenizer import Tokenizer
 
 class Info5W1H(object):
 
