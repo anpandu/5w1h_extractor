@@ -12,5 +12,5 @@ class Info5W1H(object):
 		self.why = _why
 		self.how = _how
 		self.text = _text
-		self.sentences = self.tokenizer.getSentence(_text)
+		self.sentences = self.tokenizer.getSentences(_text)
 		self.tokenized_sentences = [self.tokenizer.getTokens(sentence) for sentence in self.sentences]

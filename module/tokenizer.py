@@ -62,7 +62,7 @@ class Tokenizer(object):
 				terms.append(token)
 		return terms
 
-	def getSentence(self, str):
+	def getSentences(self, str):
 		res = str.split('. ')
 		res = [item.split(' - ') for item in res]
 		res = [item for sublist in res for item in sublist]
