@@ -72,5 +72,5 @@ class Tokenizer(object):
 		res[len(res)-1] = last_sentence[:-1] if (last_sentence[-1]=='.') else last_sentence
 		return res
 
-	def removeNonAscii(self, str):
-		return ''.join([i if ord(i) < 128 else ' ' for i in str])
+	def removeNonAscii(self, stri):
+		return "".join([ch for ch in stri if ord(ch)<= 127 and ord(ch)>= 32 ])
