@@ -3,11 +3,11 @@ import re
 
 class Tokenizer(object):
 
-	def __init__(self):
-		self.entityjoin = ['dan', 'untuk']
-		self.entityjoinexception = ['Rp']
+	entityjoin = ['dan', 'untuk']
+	entityjoinexception = ['Rp']
 
-	def getTokens(self, str): # !!! kata 'dan' pas terakhir
+	@staticmethod
+	def getTokens(str): # !!! kata 'dan' pas terakhir
 		rawtokens = str.split(' ')		
 		# split non-alnum first char of token
 		again = True
@@ -45,14 +45,16 @@ class Tokenizer(object):
 			for i, rawtoken in enumerate(rawtokens):
 				if len(rawtoken)>1:
 					again = again or (not rawtoken[-1].isalnum())
+		rawtokens = [rawtoken for rawtoken in rawtokens if rawtoken!='']
 		return rawtokens
 
-	def getTerms(self, str): # !!! kata 'dan' pas terakhir
-		tokens = self.getTokens(str)
+	@staticmethod
+	def getTerms(str): # !!! kata 'dan' pas terakhir
+		tokens = Tokenizer.getTokens(str)
 		terms = []
 		temp = []
 		for token in tokens:
-			if ((token[0].isupper()) and (token not in self.entityjoinexception)):
+			if ((token[0].isupper()) and (token not in Tokenizer.entityjoinexception)):
 				temp.append(token)
 			elif (len(temp)>0):
 				terms.append(' '.join(temp))
@@ -62,7 +64,8 @@ class Tokenizer(object):
 				terms.append(token)
 		return terms
 
-	def getSentences(self, str):
+	@staticmethod
+	def getSentences(str):
 		res = str.split('. ')
 		res = [item.split(' - ') for item in res]
 		res = [item for sublist in res for item in sublist]
@@ -72,5 +75,6 @@ class Tokenizer(object):
 		res[len(res)-1] = last_sentence[:-1] if (last_sentence[-1]=='.') else last_sentence
 		return res
 
-	def removeNonAscii(self, stri):
+	@staticmethod
+	def removeNonAscii(stri):
 		return "".join([ch for ch in stri if ord(ch)<= 127 and ord(ch)>= 32 ])
