@@ -77,4 +77,4 @@ class Tokenizer(object):
 
 	@staticmethod
 	def removeNonAscii(stri):
-		return "".join([ch for ch in stri if ord(ch)< 127 and ord(ch)> 32 ])
+		return "".join([ch for ch in stri if ord(ch)< 127 and ord(ch)> 31 ])

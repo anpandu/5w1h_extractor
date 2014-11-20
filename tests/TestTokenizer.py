@@ -23,5 +23,5 @@ class TestTokenizer:
         assert Tokenizer.getSentences(self.paragraph1) == psentences
 
     def test_removeNonAscii(self):
-    	sentence1 = u"\u007Fhai\u0020"
+    	sentence1 = u"\u007Fhai\u001F"
         assert Tokenizer.removeNonAscii(sentence1) == "hai"
