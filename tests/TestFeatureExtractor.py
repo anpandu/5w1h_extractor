@@ -13,8 +13,11 @@ class TestFeatureExtractor:
         assert FeatureExtractor.prevToken("Mama", self.paragraph1) == ['_begin_', '.']
         assert FeatureExtractor.prevToken("trigger", self.paragraph1) == ['my']
         assert FeatureExtractor.prevToken("poop", self.paragraph1) == []
+        print FeatureExtractor.prevToken("", self.paragraph1)
+        assert FeatureExtractor.prevToken("", self.paragraph1) == []
 
     def test_nextToken(self):
         assert FeatureExtractor.nextToken(".", self.paragraph1) == ['Mama', '_end_']
         assert FeatureExtractor.nextToken("against", self.paragraph1) == ['his']
         assert FeatureExtractor.nextToken("poop", self.paragraph1) == []
+        assert FeatureExtractor.nextToken("", self.paragraph1) == []

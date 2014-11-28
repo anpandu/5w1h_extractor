@@ -26,8 +26,11 @@ class FeatureExtractor(object):
 
 	@staticmethod
 	def _getTokenIdx(needles, hays):
-		res = []
-		for i, hay in enumerate(hays):
-			if (needles==hays[i:i+len(needles)]):
-				res.append(i)
-		return res
+		if (len(needles)>0):
+			res = []
+			for i, hay in enumerate(hays):
+				if (needles==hays[i:i+len(needles)]):
+					res.append(i)
+			return res
+		else:
+			return []
