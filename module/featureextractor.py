@@ -33,7 +33,7 @@ class FeatureExtractor(object):
 		doc_tokens = Tokenizer.getTokens(doc)
 		word_tokens = Tokenizer.getTokens(word)
 		idxs = FeatureExtractor._getTokenIdx(word_tokens, doc_tokens)
-		res = [doc_tokens[idx+len(word_tokens)] if idx<len(doc_tokens)-1 else "_end_" for idx in idxs]
+		res = [doc_tokens[idx+len(word_tokens)] if idx<len(doc_tokens)-len(word_tokens) else "_end_" for idx in idxs]
 		return res
 
 	@staticmethod
