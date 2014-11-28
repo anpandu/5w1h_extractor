@@ -20,3 +20,11 @@ class FeatureExtractorWhen(object):
 		for dayname in daynames:
 			res = res or FeatureExtractor.isIncludingString(dayname, word)
 		return res
+
+	@staticmethod
+	def isContainingMonthNames(word):
+		monthnames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "November", "Desember"]
+		res = False
+		for monthname in monthnames:
+			res = res or FeatureExtractor.isIncludingString(monthname, word)
+		return res

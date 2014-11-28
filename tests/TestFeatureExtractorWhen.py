@@ -12,3 +12,11 @@ class TestFeatureExtractorWhen:
         assert FeatureExtractorWhen.isContainingDayNames("Kamis, 18 April 2013") == True
         assert FeatureExtractorWhen.isContainingDayNames("Ahad (14/4)") == True
         assert FeatureExtractorWhen.isContainingDayNames("15 April 2013") == False
+
+    def test_isContainingMonthNames(self):
+        assert FeatureExtractorWhen.isContainingMonthNames("Ahad, 14 April 2013") == True
+        assert FeatureExtractorWhen.isContainingMonthNames("Kamis, 18 Januari") == True
+        assert FeatureExtractorWhen.isContainingMonthNames("15 April 2013") == True
+        assert FeatureExtractorWhen.isContainingMonthNames("15 april 2013") == False
+        assert FeatureExtractorWhen.isContainingMonthNames("Ahad (14/4)") == False
+        assert FeatureExtractorWhen.isContainingMonthNames("Sabtu, (11/9)") == False
