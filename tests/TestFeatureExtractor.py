@@ -14,15 +14,20 @@ class TestFeatureExtractor:
         assert FeatureExtractor.prevToken("trigger", self.paragraph1) == ['my']
         assert FeatureExtractor.prevToken("poop", self.paragraph1) == []
         assert FeatureExtractor.prevToken("", self.paragraph1) == []
+        assert FeatureExtractor.prevToken("Mama, just", self.paragraph1) == ['_begin_']
 
     def test_nextToken(self):
         assert FeatureExtractor.nextToken(".", self.paragraph1) == ['Mama', '_end_']
         assert FeatureExtractor.nextToken("against", self.paragraph1) == ['his']
         assert FeatureExtractor.nextToken("poop", self.paragraph1) == []
         assert FeatureExtractor.nextToken("", self.paragraph1) == []
+        assert FeatureExtractor.nextToken("all away.", self.paragraph1) == ['_end_']
 
     def test_prevTokenInSentences(self):
         assert FeatureExtractor.prevTokenInSentences("Mama", self.paragraph1) == ['_begin_', '_begin_']
+        assert FeatureExtractor.prevTokenInSentences("Mama, just", self.paragraph1) == ['_begin_']
 
     def test_nextTokenInSentences(self):
+        assert FeatureExtractor.nextTokenInSentences("all away", self.paragraph1) == ['_end_']
+        assert FeatureExtractor.nextTokenInSentences("he's dead", self.paragraph1) == ['_end_']
         assert FeatureExtractor.nextTokenInSentences("dead", self.paragraph1) == ['_end_']
