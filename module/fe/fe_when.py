@@ -28,3 +28,11 @@ class FeatureExtractorWhen(object):
 		for monthname in monthnames:
 			res = res or FeatureExtractor.isIncludingString(monthname, word)
 		return res
+
+	@staticmethod
+	def isContainingDateNumbers(word):
+		res = False
+		for dn in range(1,31):
+			dn_str = "%d" % (dn)
+			res = res or FeatureExtractor.isIncludingString(dn_str, word)
+		return res

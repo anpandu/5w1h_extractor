@@ -20,3 +20,9 @@ class TestFeatureExtractorWhen:
         assert FeatureExtractorWhen.isContainingMonthNames("15 april 2013") == False
         assert FeatureExtractorWhen.isContainingMonthNames("Ahad (14/4)") == False
         assert FeatureExtractorWhen.isContainingMonthNames("Sabtu, (11/9)") == False
+
+    def test_isContainingDateNumbers(self):
+        assert FeatureExtractorWhen.isContainingDateNumbers("Ahad, 31 Mei") == True
+        assert FeatureExtractorWhen.isContainingDateNumbers("1 April 2013") == True
+        assert FeatureExtractorWhen.isContainingDateNumbers("Ahad (31/5)") == True
+        assert FeatureExtractorWhen.isContainingDateNumbers("Sabtu") == False
