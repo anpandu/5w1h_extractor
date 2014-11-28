@@ -3,6 +3,14 @@ from tokenizer import Tokenizer
 class FeatureExtractor(object):
 
 	@staticmethod
+	def isIncludingString(string, word):
+		word_tokens = Tokenizer.getTokens(word)
+		res = False
+		for word_token in word_tokens:
+			res = res or string in word_token
+		return res
+
+	@staticmethod
 	def freq(word, doc):
 		doc_tokens = Tokenizer.getTokens(doc)
 		word_tokens = Tokenizer.getTokens(word)

@@ -31,3 +31,10 @@ class TestFeatureExtractor:
         assert FeatureExtractor.nextTokenInSentences("all away", self.paragraph1) == ['_end_']
         assert FeatureExtractor.nextTokenInSentences("he's dead", self.paragraph1) == ['_end_']
         assert FeatureExtractor.nextTokenInSentences("dead", self.paragraph1) == ['_end_']
+
+    def test_isIncludingString(self):
+        assert FeatureExtractor.isIncludingString("ll", "hello") == True
+        assert FeatureExtractor.isIncludingString("/", "Sabtu, 11/9") == True
+        assert FeatureExtractor.isIncludingString("Sabtu", "Sabtu (11/9)") == True
+        assert FeatureExtractor.isIncludingString("Sabtu ", "Sabtu (11/9)") == False
+        assert FeatureExtractor.isIncludingString("sabtu", "Sabtu (11/9)") == False
