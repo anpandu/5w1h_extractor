@@ -9,6 +9,18 @@ class FeatureExtractor(object):
 		return len(FeatureExtractor._getTokenIdx(word_tokens, doc_tokens))
 
 	@staticmethod
+	def prevTokenInSentences(word, doc):
+		sentences = Tokenizer.getSentences(doc)
+		res = [prevtoken for sentence in sentences for prevtoken in FeatureExtractor.prevToken(word, sentence)]
+		return res
+
+	@staticmethod
+	def nextTokenInSentences(word, doc):
+		sentences = Tokenizer.getSentences(doc)
+		res = [nexttoken for sentence in sentences for nexttoken in FeatureExtractor.nextToken(word, sentence)]
+		return res
+
+	@staticmethod
 	def prevToken(word, doc):
 		doc_tokens = Tokenizer.getTokens(doc)
 		word_tokens = Tokenizer.getTokens(word)

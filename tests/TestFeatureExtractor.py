@@ -20,3 +20,9 @@ class TestFeatureExtractor:
         assert FeatureExtractor.nextToken("against", self.paragraph1) == ['his']
         assert FeatureExtractor.nextToken("poop", self.paragraph1) == []
         assert FeatureExtractor.nextToken("", self.paragraph1) == []
+
+    def test_prevTokenInSentences(self):
+        assert FeatureExtractor.prevTokenInSentences("Mama", self.paragraph1) == ['_begin_', '_begin_']
+
+    def test_nextTokenInSentences(self):
+        assert FeatureExtractor.nextTokenInSentences("dead", self.paragraph1) == ['_end_']
