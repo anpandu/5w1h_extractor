@@ -1,4 +1,5 @@
 from ..featureextractor import FeatureExtractor
+import re
 
 class FeatureExtractorWhen(object):
 
@@ -35,4 +36,10 @@ class FeatureExtractorWhen(object):
 		for dn in range(1,31):
 			dn_str = "%d" % (dn)
 			res = res or FeatureExtractor.isIncludingString(dn_str, word)
+		return res
+
+	@staticmethod
+	def isContainingYear(word):
+		find = re.findall(r'20\d\d', word)
+		res = len(find)>0
 		return res
