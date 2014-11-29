@@ -5,13 +5,18 @@ class FeatureExtractorWhen(object):
 
 	@staticmethod
 	def getFeatureWhen(word, doc):
-		pts = FeatureExtractor.prevTokenInSentences(word, doc)
-		nts = FeatureExtractor.nextTokenInSentences(word, doc)
 		features = {}
 		# features["_word"] = word
-		features["prev"] = pts[0] if len(pts)>0 else ""
-		features["next"] = nts[0] if len(nts)>0 else ""
-		# features["freq"] = FeatureExtractor.freq(word, doc)
+		# pts = FeatureExtractor.prevTokenInSentences(word, doc)
+		# nts = FeatureExtractor.nextTokenInSentences(word, doc)
+		# features["prev"] = pts[0] if len(pts)>0 else ""
+		# features["next"] = nts[0] if len(nts)>0 else ""
+		features["daynames"] = FeatureExtractorWhen.isContainingDayNames(word)
+		features["monthnames"] = FeatureExtractorWhen.isContainingMonthNames(word)
+		features["datenumbers"] = FeatureExtractorWhen.isContainingDateNumbers(word)
+		features["year"] = FeatureExtractorWhen.isContainingYear(word)
+		features["slash"] = FeatureExtractor.isIncludingString("/",word)
+		features["ntoken"] = FeatureExtractor.countToken(word)
 		return features
 
 	@staticmethod
