@@ -37,3 +37,8 @@ class TestFeatureExtractor:
         assert FeatureExtractor.isIncludingString("/", "Sabtu, 11/9") == True
         assert FeatureExtractor.isIncludingString("Sabtu", "Sabtu (11/9)") == True
         assert FeatureExtractor.isIncludingString("sabtu", "Sabtu (11/9)") == False
+
+    def test_countToken(self):
+        assert FeatureExtractor.countToken("hello") == 1
+        assert FeatureExtractor.countToken("") == 0
+        assert FeatureExtractor.countToken("Sabtu (11/9)") == 4

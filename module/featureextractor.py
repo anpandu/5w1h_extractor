@@ -7,6 +7,10 @@ class FeatureExtractor(object):
 		return string in word
 
 	@staticmethod
+	def countToken(word):
+		return len(Tokenizer.getTokens(word))
+
+	@staticmethod
 	def freq(word, doc):
 		doc_tokens = Tokenizer.getTokens(doc)
 		word_tokens = Tokenizer.getTokens(word)
