@@ -36,5 +36,4 @@ class TestFeatureExtractor:
         assert FeatureExtractor.isIncludingString("ll", "hello") == True
         assert FeatureExtractor.isIncludingString("/", "Sabtu, 11/9") == True
         assert FeatureExtractor.isIncludingString("Sabtu", "Sabtu (11/9)") == True
-        assert FeatureExtractor.isIncludingString("Sabtu ", "Sabtu (11/9)") == False
         assert FeatureExtractor.isIncludingString("sabtu", "Sabtu (11/9)") == False
