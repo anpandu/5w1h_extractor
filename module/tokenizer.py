@@ -49,6 +49,19 @@ class Tokenizer(object):
 		return rawtokens
 
 	@staticmethod
+	def getNTokens(str, n): # sliding window
+		tokens = Tokenizer.getTokens(str)
+		res = []
+		for i in range(0,n):
+			for j in range(0, len(tokens)-i):
+				temp = []
+				for k in range(0,i+1):
+					if (j+k<len(tokens)):
+						temp.append(tokens[j+k])
+				res.append(" ".join(temp))
+		return res
+
+	@staticmethod
 	def getTerms(str): # !!! kata 'dan' pas terakhir
 		tokens = Tokenizer.getTokens(str)
 		terms = []

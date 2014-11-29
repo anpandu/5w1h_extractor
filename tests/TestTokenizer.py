@@ -25,3 +25,10 @@ class TestTokenizer:
     def test_removeNonAscii(self):
     	sentence1 = u"\u007Fhai\u001F"
         assert Tokenizer.removeNonAscii(sentence1) == "hai"
+
+    def test_getNTokens(self):
+        sentence = "how deep is your love"
+        assert Tokenizer.getNTokens(sentence, 1) == ['how', 'deep', 'is', 'your', 'love']
+        assert Tokenizer.getNTokens(sentence, 2) == ['how', 'deep', 'is', 'your', 'love', 'how deep', 'deep is', 'is your', 'your love']
+        assert len(Tokenizer.getNTokens(sentence, 5)) == 15
+        assert len(Tokenizer.getNTokens(sentence, 7)) == 15
