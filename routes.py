@@ -3,13 +3,13 @@ from flask import make_response
 from flask import request
 from flask import abort
 from flask import jsonify
-from module.webservice.api.apiwhen import ApiWhen
+from module.web.api.apiwhen import ApiWhen
 
 import jinja2
 from flask import render_template
 
-app = Flask(__name__)
-app.jinja_loader = jinja2.FileSystemLoader('module/webservice/templates')
+app = Flask(__name__, static_folder='module/web/static')
+app.jinja_loader = jinja2.FileSystemLoader('module/web/templates')
 
 @app.route("/")
 def hello():
