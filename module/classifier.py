@@ -27,10 +27,6 @@ class Classifier(object):
 		return c
 
 	@staticmethod
-	def classify(c, fitur):
-		return c.classify(fitur)
-
-	@staticmethod
 	def getClassifiedTokens(c, info, text):
 		if (info=="when"):
 			ctokens = []
