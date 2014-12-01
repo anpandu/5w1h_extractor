@@ -5,11 +5,15 @@ from flask import abort
 from flask import jsonify
 from module.webservice.api.apiwhen import ApiWhen
 
+import jinja2
+from flask import render_template
+
 app = Flask(__name__)
+app.jinja_loader = jinja2.FileSystemLoader('module/webservice/templates')
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return render_template('index.html')
 
 @app.route('/5w1h', methods = ['GET'])
 def getInfo():
