@@ -11,10 +11,6 @@ class TestClassifier:
     def setup_class(self):
         pass
 
-    @classmethod
-    def teardown_class(self):
-        os.remove("whentest.classifier")
-
     def test_trainWhen(self):
         temp = Classifier.trainWhen(MDP.get5w1h([6]))
         assert "classifier" in temp
@@ -26,14 +22,15 @@ class TestClassifier:
         Classifier.saveClassifier(c, "whentest")
         c2 = Classifier.loadClassifier("whentest")
         assert isinstance(c2, nltk.classify.naivebayes.NaiveBayesClassifier)
+        os.remove("whentest.classifier")
 
     def test_classify(self):
-        c = Classifier.loadClassifier("whentest")
+        c = Classifier.loadClassifier("classifiers/when")
         fitur = FeatureExtractorWhen.getFeatureWhen("Minggu, 19 Agustus 2013", "")
         assert Classifier.classify(c, fitur)
 
     def test_getClassifiedTokens(self):
         text = MDP.get5w1h([6])[0].text
-        c = Classifier.loadClassifier("whentest")
+        c = Classifier.loadClassifier("classifiers/when")
         ctokens = Classifier.getClassifiedTokens(c, "when", text)
         assert len(ctokens)>1
