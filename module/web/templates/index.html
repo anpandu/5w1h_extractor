@@ -10,6 +10,8 @@
 	<link media="all" type="text/css" rel="stylesheet" href="../static/css/master.css">
 	<link media="all" type="text/css" rel="stylesheet" href="../static/css/bootstrap.css">
 	<script src="../static/js/bootstrap.js"></script>
+	<script src="../static/js/jquery.js"></script>
+	<script src="../static/js/demo.js"></script>
 </head>
 <body>
 	<div class="container col-sm-12">
@@ -45,7 +47,7 @@
 				<div class="container">
 					<br>
 					<p>Silahkan input berita berbahasa Indonesia pada form di atas ini</p>
-					<p>Atau <a>random</a></p>
+					<p>Atau <a onClick="getRandomNews()">random</a></p>
 					<br>
 				</div>
 			</div>
@@ -58,7 +60,7 @@
 					<li class="list-group-item"><a>Why</a></li>
 					<li class="list-group-item"><a>How</a></li>
 				</ul>
-				<textarea id="outputNews" class="form-control" rows="10" placeholder="" name="v"></textarea>
+				<textarea id="outputNews" class="form-control" rows="10" placeholder="" name="outputNews"></textarea>
 			</div>
 		</div>
 		<div class="col-sm-1"></div>

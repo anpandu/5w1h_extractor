@@ -4,6 +4,7 @@ from flask import request
 from flask import abort
 from flask import jsonify
 from module.web.api.apiwhen import ApiWhen
+from module.web.api.apinews import ApiNews
 
 import jinja2
 from flask import render_template
@@ -21,8 +22,15 @@ def getInfo():
     resp = make_response(json.dumps(data), 200)
     return resp
 
+@app.route('/api/randomnews', methods = ['GET'])
+def getRandomNews():
+    data = {'news'  : ApiNews.getRandomNews()}
+    print ApiNews.getRandomNews()
+    resp = make_response(jsonify(data), 200)
+    return resp
+
 @app.route('/api/when', methods = ['POST'])
-def apiWhen():
+def getWhen():
     if not request.form or not 'text' in request.form:
         abort(400)
     text = request.form['text']
