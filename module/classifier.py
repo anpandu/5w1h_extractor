@@ -29,3 +29,15 @@ class Classifier(object):
 	@staticmethod
 	def classify(c, fitur):
 		return c.classify(fitur)
+
+	@staticmethod
+	def getClassifiedTokens(c, info, text):
+		if (info=="when"):
+			ctokens = []
+			for token in Tokenizer.getNTokens(text, 5):
+				fitur = FeatureExtractorWhen.getFeatureWhen(token, text)
+				ctokens.append((c.classify(fitur), token))
+			return ctokens
+		else:
+			return []
+

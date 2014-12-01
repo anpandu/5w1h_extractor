@@ -31,3 +31,9 @@ class TestClassifier:
         c = Classifier.loadClassifier("whentest")
         fitur = FeatureExtractorWhen.getFeatureWhen("Minggu, 19 Agustus 2013", "")
         assert Classifier.classify(c, fitur)
+
+    def test_getClassifiedTokens(self):
+        text = MDP.get5w1h([6])[0].text
+        c = Classifier.loadClassifier("whentest")
+        ctokens = Classifier.getClassifiedTokens(c, "when", text)
+        assert len(ctokens)>1
