@@ -2,8 +2,6 @@ import nltk
 import os
 from module.classifier import Classifier
 from module.dataprovider import MDP
-from module.featureextractor import FeatureExtractor
-from module.fe.fe_when import FeatureExtractorWhen
 
 class TestClassifier:
 
