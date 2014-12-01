@@ -25,3 +25,7 @@ class Classifier(object):
 		cfile = open("%s.classifier" % (filename), "r")
 		c = pickle.load(cfile)
 		return c
+
+	@staticmethod
+	def classify(c, fitur):
+		return c.classify(fitur)
