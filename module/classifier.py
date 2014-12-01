@@ -27,8 +27,9 @@ class Classifier(object):
 		return c
 
 	@staticmethod
-	def getClassifiedTokens(c, info, text):
+	def getClassifiedTokens(info, text):
 		if (info=="when"):
+			c = Classifier.loadClassifier("classifiers/when")
 			ctokens = []
 			for token in Tokenizer.getNTokens(text, 5):
 				fitur = FeatureExtractorWhen.getFeatureWhen(token, text)

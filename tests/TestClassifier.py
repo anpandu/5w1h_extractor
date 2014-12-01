@@ -24,6 +24,5 @@ class TestClassifier:
 
     def test_getClassifiedTokens(self):
         text = MDP.get5w1h([6])[0].text
-        c = Classifier.loadClassifier("classifiers/when")
-        ctokens = Classifier.getClassifiedTokens(c, "when", text)
+        ctokens = Classifier.getClassifiedTokens("when", text)
         assert len(ctokens)>1
