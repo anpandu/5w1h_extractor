@@ -1,8 +1,9 @@
 from flask import Flask
-from flask import Response
-from flask import json
+from flask import make_response
+from flask import request
+from flask import abort
+from flask import jsonify
 from module.webservice.api.apiwhen import ApiWhen
-from module.dataprovider import MDP
 
 app = Flask(__name__)
 
@@ -12,18 +13,22 @@ def hello():
 
 @app.route('/5w1h', methods = ['GET'])
 def getInfo():
-    data = {
-        'hello'  : 'world'
-    }
-    resp = Response(json.dumps(data), status=200, mimetype='application/json') #resp.headers['Link'] = 'http://anpandu.com'
+    data = {'hello'  : 'world'}
+    resp = make_response(json.dumps(data), 200)
     return resp
 
-@app.route('/api/when', methods = ['GET'])
+@app.route('/api/when', methods = ['POST'])
 def apiWhen():
-    text = MDP.get5w1h([6])[1].text
+    if not request.form or not 'text' in request.form:
+        abort(400)
+    text = request.form['text']
     data = {'when' : ApiWhen.getWhen(text)}
-    resp = Response(json.dumps(data), status=200, mimetype='application/json')
+    resp = make_response(jsonify(data), 200)
     return resp
+
+@app.errorhandler(400)
+def not_found(error):
+    return make_response(jsonify({'error': 'wrong parameter'}), 400)
 
 if __name__ == "__main__":
     app.run()
