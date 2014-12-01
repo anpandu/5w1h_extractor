@@ -25,7 +25,6 @@ def getInfo():
 @app.route('/api/randomnews', methods = ['GET'])
 def getRandomNews():
     data = {'news'  : ApiNews.getRandomNews()}
-    print ApiNews.getRandomNews()
     resp = make_response(jsonify(data), 200)
     return resp
 
