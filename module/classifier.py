@@ -1,16 +1,19 @@
 import nltk
 import pickle
 from module.tokenizer import Tokenizer
-from module.fe.fe_when import FeatureExtractorWhen
+# from module.fe.fe_when import FeatureExtractorWhen
+from module.featureextractor import FeatureExtractor
+from module.textmarker import TextMarker
 
 class Classifier(object):
 
 	@staticmethod
-	def trainWhen(info5w1hs):
+	def train(info5w1hs):
 		fiturs = []
 		for info in info5w1hs:
-			for token in Tokenizer.getNTokens(info.text, 5):
-				fiturs.append( (FeatureExtractorWhen.getFeatureWhen(token, info.text), Tokenizer.getTokens(token)==Tokenizer.getTokens(info.when)) )
+			for tupl in TextMarker.getTextLabelTuples(info):
+				# print (FeatureExtractor.getFeature(tupl[1], info.text), tupl[0])
+				fiturs.append( (FeatureExtractor.getFeature(tupl[1], info.text), tupl[0]) )
 		c = nltk.NaiveBayesClassifier.train(fiturs)
 		return {"classifier": c, "fiturs": fiturs}
 
@@ -28,13 +31,10 @@ class Classifier(object):
 
 	@staticmethod
 	def getClassifiedTokens(info, text):
-		if (info=="when"):
-			c = Classifier.loadClassifier("classifiers/when")
-			ctokens = []
-			for token in Tokenizer.getNTokens(text, 5):
-				fitur = FeatureExtractorWhen.getFeatureWhen(token, text)
-				ctokens.append((c.classify(fitur), token))
-			return ctokens
-		else:
-			return []
+		c = Classifier.loadClassifier("classifiers/when")
+		ctokens = []
+		for token in Tokenizer.getNTokens(text, 5):
+			fitur = FeatureExtractor.getFeature(token, text)
+			ctokens.append((c.classify(fitur), token))
+		return ctokens
 
