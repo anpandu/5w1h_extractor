@@ -28,17 +28,16 @@ class TestTextMarker:
 
 	def test_getOtherMarkedText(self):
 		info = self.info
-		res = TextMarker.getMarkedText(info)
-		res2 = TextMarker.getOtherMarkedText(res)
-		print res
-		print ''
-		searchObj = re.findall( r'(\[b.+?\].+?\[e.+?\])', res2)
-		for x in searchObj:
-			print x
-		assert re.search(r'(\[bwhat\].+?\[ewhat\])', res2)
-		assert re.search(r'(\[bwho\].+?\[ewho\])', res2)
-		assert re.search(r'(\[bwhen\].+?\[ewhen\])', res2)
-		assert re.search(r'(\[bwhere\].+?\[ewhere\])', res2)
-		assert re.search(r'(\[bwhy\].+?\[ewhy\])', res2)
-		assert re.search(r'(\[bhow\].+?\[ehow\])', res2)
-		assert re.search(r'(\[bother\].+?\[eother\])', res2)
+		res = TextMarker.getOtherMarkedText(info)
+		# print res
+		# print ''
+		searchObj = re.findall( r'(\[b.+?\].+?\[e.+?\])', res)
+		# for x in searchObj:
+		# 	print x
+		assert re.search(r'(\[bwhat\].+?\[ewhat\])', res)
+		assert re.search(r'(\[bwho\].+?\[ewho\])', res)
+		assert re.search(r'(\[bwhen\].+?\[ewhen\])', res)
+		assert re.search(r'(\[bwhere\].+?\[ewhere\])', res)
+		assert re.search(r'(\[bwhy\].+?\[ewhy\])', res)
+		assert re.search(r'(\[bhow\].+?\[ehow\])', res)
+		assert re.search(r'(\[bother\].+?\[eother\])', res)

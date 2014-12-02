@@ -26,7 +26,8 @@ class TextMarker(object):
 		return text
 
 	@staticmethod
-	def getOtherMarkedText(markedtext):
+	def getOtherMarkedText(info):
+		markedtext = TextMarker.getMarkedText(info)
 		btags2 = ['B_WHAT', 'B_WHO', 'B_WHEN', 'B_WHERE', 'B_WHY', 'B_HOW']
 		etags2 = ['E_WHAT', 'E_WHO', 'E_WHEN', 'E_WHERE', 'E_WHY', 'E_HOW']
 
