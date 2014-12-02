@@ -1,5 +1,6 @@
 from dataprovider import MDP
 from tokenizer import Tokenizer
+import re
 
 class TextMarker(object):
 
@@ -8,12 +9,12 @@ class TextMarker(object):
 	othertags = ['[bother]', '[eother]']
 
 	@staticmethod
-	def getMarkedTexts(infos):
-		text_marked = [TextMarker.getMarkedText(info) for info in infos]
+	def getTaggedTexts(infos):
+		text_marked = [TextMarker.getTaggedText(info) for info in infos]
 		return text_marked
 
 	@staticmethod
-	def getMarkedText(info):
+	def getTaggedText(info):
 		text = getattr(info, "text")
 		for i, propname in enumerate(["what", "who", "when", "where", "why", "how"]):
 			if (getattr(info, propname)!='-' and getattr(info, propname)!=''):
@@ -26,19 +27,19 @@ class TextMarker(object):
 		return text
 
 	@staticmethod
-	def getOtherMarkedText(info):
-		markedtext = TextMarker.getMarkedText(info)
+	def getOtherTaggedText(info):
+		taggedtext = TextMarker.getTaggedText(info)
 		btags2 = ['B_WHAT', 'B_WHO', 'B_WHEN', 'B_WHERE', 'B_WHY', 'B_HOW']
 		etags2 = ['E_WHAT', 'E_WHO', 'E_WHEN', 'E_WHERE', 'E_WHY', 'E_HOW']
 
 		for i, tag in enumerate(btags2):
-			markedtext = markedtext.replace(TextMarker.btags[i], tag)
+			taggedtext = taggedtext.replace(TextMarker.btags[i], tag)
 		for i, tag in enumerate(etags2):
-			markedtext = markedtext.replace(TextMarker.etags[i], tag)	
+			taggedtext = taggedtext.replace(TextMarker.etags[i], tag)	
 
 		text = ""
 		state = 0
-		for token in Tokenizer.getTokens(markedtext):
+		for token in Tokenizer.getTokens(taggedtext):
 			if (reduce( (lambda x, y: x or y), list(map((lambda x: x in token), btags2)) )):
 				state += 1
 			if (state==0):
@@ -56,3 +57,25 @@ class TextMarker(object):
 			text = text.replace(etags2[i], tag)	
 
 		return text
+
+	@staticmethod
+	def getMarkedText(info):
+		omtext = TextMarker.getOtherTaggedText(info)
+		result = ""
+		searchObj = re.findall( r'\[b(.+?)\](.+?)\[e.+?\]', omtext)
+		for tup in searchObj:
+			if (tup[0]=="other"):
+				result += "[%s]%s[%s]" % (tup[0], tup[1], tup[0])
+			else:
+				label = tup[0]
+				tokens = Tokenizer.getTokens(tup[1])
+				for i, token in enumerate(tokens):
+					prefix = "beg" if(i==0) else "in"
+					result += "[%s_%s]%s[%s_%s]" % (prefix, label, token, prefix, label)
+		return result
+
+	@staticmethod
+	def getTextLabelTuples(info):
+		mtext = TextMarker.getMarkedText(info)
+		tuples = re.findall( r'\[(.+?)\](.+?)\[.+?\]', mtext)
+		return tuples
