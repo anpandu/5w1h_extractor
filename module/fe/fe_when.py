@@ -1,4 +1,4 @@
-from ..featureextractor import FeatureExtractor
+from base_fe import BaseFeatureExtractor
 import re
 
 class FeatureExtractorWhen(object):
@@ -15,8 +15,8 @@ class FeatureExtractorWhen(object):
 		features["monthnames"] = FeatureExtractorWhen.isContainingMonthNames(word)
 		features["datenumbers"] = FeatureExtractorWhen.isContainingDateNumbers(word)
 		features["year"] = FeatureExtractorWhen.isContainingYear(word)
-		features["slash"] = FeatureExtractor.isIncludingString("/",word)
-		features["ntoken"] = FeatureExtractor.countToken(word)
+		features["slash"] = BaseFeatureExtractor.isContainingString("/",word)
+		features["ntoken"] = BaseFeatureExtractor.countToken(word)
 		return features
 
 	@staticmethod
@@ -24,7 +24,7 @@ class FeatureExtractorWhen(object):
 		daynames = ["Ahad", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
 		res = False
 		for dayname in daynames:
-			res = res or FeatureExtractor.isIncludingString(dayname, word)
+			res = res or BaseFeatureExtractor.isContainingString(dayname, word)
 		return res
 
 	@staticmethod
@@ -32,7 +32,7 @@ class FeatureExtractorWhen(object):
 		monthnames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "November", "Desember"]
 		res = False
 		for monthname in monthnames:
-			res = res or FeatureExtractor.isIncludingString(monthname, word)
+			res = res or BaseFeatureExtractor.isContainingString(monthname, word)
 		return res
 
 	@staticmethod
@@ -40,7 +40,7 @@ class FeatureExtractorWhen(object):
 		res = False
 		for dn in range(1,31):
 			dn_str = "%d" % (dn)
-			res = res or FeatureExtractor.isIncludingString(dn_str, word)
+			res = res or BaseFeatureExtractor.isContainingString(dn_str, word)
 		return res
 
 	@staticmethod
