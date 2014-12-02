@@ -4,7 +4,7 @@ import re
 class FeatureExtractorWhen(object):
 
 	@staticmethod
-	def getFeatureWhen(word, doc):
+	def getFeature(word, doc):
 		features = {}
 		# features["_word"] = word
 		# pts = FeatureExtractor.prevTokenInSentences(word, doc)

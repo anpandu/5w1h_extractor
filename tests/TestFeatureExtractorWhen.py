@@ -33,8 +33,8 @@ class TestFeatureExtractorWhen:
         assert FeatureExtractorWhen.isContainingYear("2114") == False
         assert FeatureExtractorWhen.isContainingYear("1 April 2013") == True
 
-    def test_getFeatureWhen(self):
-        res = FeatureExtractorWhen.getFeatureWhen("Ahad, 14 April 2013", "")
+    def test_getFeature(self):
+        res = FeatureExtractorWhen.getFeature("Ahad, 14 April 2013", "")
         assert "ntoken" in res
         assert "daynames" in res
         assert "datenumbers" in res
