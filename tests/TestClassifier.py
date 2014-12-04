@@ -10,7 +10,6 @@ class TestClassifier:
         pass
 
     def test_train(self):
-        Classifier.train(MDP.get5w1h([6]))
         temp = Classifier.train(MDP.get5w1h([6]))
         assert "classifier" in temp
         assert "fiturs" in temp
@@ -29,7 +28,8 @@ class TestClassifier:
         assert len(ctokens)>1
     
     # def test_temp(self):
-    #     temp = Classifier.train(MDP.get5w1h([6]))
+    #     infos = MDP.get5w1h([6])
+    #     temp = Classifier.train(infos)
     #     c = temp["classifier"]
     #     fiturs = temp["fiturs"]
     #     fiturst = [x for x in fiturs if (x[1]=="beg_when" or x[1]=="in_when")]

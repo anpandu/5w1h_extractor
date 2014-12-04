@@ -7,7 +7,7 @@ class TestFeatureExtractor:
     @classmethod
     def setup_class(self):
     	# self.text1 = "Forum Indonesia untuk Transparansi Anggaran (Fitra) telah menduga PT Ghalia Indonesia Printing tak akan berhasil menyelesaikan tender naskah ujian nasional."
-    	self.info = MDP.get5w1h([6])[0]
+    	self.info = MDP.get5w1h([6])[1]
         pass
 
     def test_getFeature(self):
@@ -17,9 +17,9 @@ class TestFeatureExtractor:
     def test_getFeaturesInSentence(self):
     	lts = TextMarker.getTextLabelTuplesInSentences(self.info)[0]
     	featuress = FeatureExtractor.getFeaturesInSentence(lts)
-    	for x in featuress:
-    		print x
-    	assert 1==2
+    	# for x in featuress:
+    	# 	print x
+    	assert 1==1
 
 	def test_runCommand(self):
 		command = "echo hahaha"
