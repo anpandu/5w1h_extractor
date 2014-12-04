@@ -112,3 +112,23 @@ class TextMarker(object):
 		# print mtext
 		tuples = re.findall( r'\[(.+?)\](.+?)\[.+?\]', mtext)
 		return tuples
+
+	@staticmethod
+	def getTextLabelTuplesInSentences(info):
+		tuples = TextMarker.getTextLabelTuples(info)
+		# for x in tuples:
+		# 	print x
+		tupless = []
+		temp = []
+		for i, x in enumerate(tuples):
+			temp += [x]
+			if (i==len(tuples)-1):
+				pass
+			else:
+				# print x
+				if (x[1]=='.' and (tuples[i+1][1][0].isupper() or tuples[i+1][1][0]=='"')):
+					tupless += [temp]
+					temp = []
+		# for x in tupless:
+		# 	print x
+		return tupless

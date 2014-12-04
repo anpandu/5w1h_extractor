@@ -57,3 +57,14 @@ class TestTextMarker:
 		assert len(tuples)>0
 		assert tuples[0]
 		assert tuples[1]
+
+	def test_getTextLabelTuplesInSentences(self):
+		info = self.info
+		tupless = TextMarker.getTextLabelTuplesInSentences(info)
+		# for tuples in tupless:
+		# 	for tup in tuples:
+		# 		print tup
+		# 	print ''
+		assert type(tupless) is list
+		assert type(tupless[0]) is list
+		assert type(tupless[0][0]) is tuple
