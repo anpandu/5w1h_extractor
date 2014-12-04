@@ -60,6 +60,7 @@ class TestTextMarker:
 
 	def test_getTextLabelTuplesInSentences(self):
 		info = self.info
+		tuples = TextMarker.getTextLabelTuples(info)
 		tupless = TextMarker.getTextLabelTuplesInSentences(info)
 		# for tuples in tupless:
 		# 	for tup in tuples:
@@ -68,3 +69,4 @@ class TestTextMarker:
 		assert type(tupless) is list
 		assert type(tupless[0]) is list
 		assert type(tupless[0][0]) is tuple
+		assert len(tuples) == len([item for tuples in tupless for item in tuples])

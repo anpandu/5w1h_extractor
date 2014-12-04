@@ -93,7 +93,7 @@ class TextMarker(object):
 		# print omtext
 		result = ""
 		searchObj = re.findall( r'\[b(.+?)\](.+?)\[e.+?\]', omtext)
-		print len(searchObj)
+		# print len(searchObj)
 		for tup in searchObj:
 			# print tup
 			if (tup[0]=="other"):
@@ -123,7 +123,7 @@ class TextMarker(object):
 		for i, x in enumerate(tuples):
 			temp += [x]
 			if (i==len(tuples)-1):
-				pass
+				tupless += [temp]
 			else:
 				# print x
 				if (x[1]=='.' and (tuples[i+1][1][0].isupper() or tuples[i+1][1][0]=='"')):
