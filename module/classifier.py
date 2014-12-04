@@ -11,9 +11,10 @@ class Classifier(object):
 	def train(info5w1hs):
 		fiturs = []
 		for info in info5w1hs:
-			for tupl in TextMarker.getTextLabelTuples(info):
-				# print (FeatureExtractor.getFeature(tupl[1], info.text), tupl[0])
-				fiturs.append( (FeatureExtractor.getFeature(tupl[1], info.text), tupl[0]) )
+			for tupls in TextMarker.getTextLabelTuplesInSentences(info):
+				featuress = FeatureExtractor.getFeaturesInSentence(tupls)
+				for features in featuress:
+					fiturs.append(features)	
 		c = nltk.NaiveBayesClassifier.train(fiturs)
 		return {"classifier": c, "fiturs": fiturs}
 

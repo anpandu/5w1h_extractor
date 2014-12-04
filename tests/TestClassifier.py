@@ -35,7 +35,7 @@ class TestClassifier:
     #     fiturst = [x for x in fiturs if (x[1]=="beg_when" or x[1]=="in_when")]
     #     fitursf = [x for x in fiturs if (x[1]!="beg_when" and x[1]!="in_when")]
 
-    #     for x in fiturs:
+    #     for x in fiturst:
     #         print x
 
     #     print ""
