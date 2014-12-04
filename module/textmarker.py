@@ -20,15 +20,44 @@ class TextMarker(object):
 			if (getattr(info, propname)!='-' and getattr(info, propname)!=''):
 				begin = text.find(getattr(info, propname))
 				if (begin>-1):
-					text = text[:begin] + TextMarker.btags[i] + text[begin:]
+					text = text[:begin] + " " + TextMarker.btags[i] + " " +  text[begin:]
 					begin = text.find(getattr(info, propname))
 					end = begin+len(getattr(info, propname))
-					text = text[:end] + TextMarker.etags[i] + text[end:]
+					text = text[:end] + " " +  TextMarker.etags[i] + " " +  text[end:]
+		while '  ' in text:
+			text = text.replace('  ', ' ')
+		temp = []
+		mark = ""
+		for te in text.split(' '):
+			if (mark==""):
+				if (te in TextMarker.btags):
+					mark = TextMarker.etags[TextMarker.btags.index(te)]
+			else:
+				if (te in TextMarker.btags):
+					temp.append(mark)
+					mark=""
+				elif(te in TextMarker.etags):
+					mark=""
+			temp.append(te)
+		state = 0
+		temp2 = []
+		for te in temp:
+			if (te in TextMarker.etags and state==0):
+				pass
+			else:
+				if (te in TextMarker.btags):
+					state = 1
+				if (te in TextMarker.etags and state==1):
+					state = 0
+				temp2.append(te)
+		text = ' '.join(temp2)
 		return text
 
 	@staticmethod
 	def getOtherTaggedText(info):
 		taggedtext = TextMarker.getTaggedText(info)
+		# print taggedtext
+		# print ''
 		btags2 = ['B_WHAT', 'B_WHO', 'B_WHEN', 'B_WHERE', 'B_WHY', 'B_HOW']
 		etags2 = ['E_WHAT', 'E_WHO', 'E_WHEN', 'E_WHERE', 'E_WHY', 'E_HOW']
 
@@ -41,7 +70,7 @@ class TextMarker(object):
 		state = 0
 		for token in Tokenizer.getTokens(taggedtext):
 			if (reduce( (lambda x, y: x or y), list(map((lambda x: x in token), btags2)) )):
-				state += 1
+				state += len([item for item in list(map((lambda x: x in token), btags2)) if item])
 			if (state==0):
 				# print "%s\t%s" % (state, TextMarker.othertags[0] + token + TextMarker.othertags[1])
 				text += TextMarker.othertags[0] + token + TextMarker.othertags[1]
@@ -49,7 +78,7 @@ class TextMarker(object):
 				# print "%s\t%s" % (state, token)
 				text += token + " "
 			if (reduce( (lambda x, y: x or y), list(map((lambda x: x in token), etags2)) )):
-				state -= 1
+				state -= len([item for item in list(map((lambda x: x in token), etags2)) if item])
 
 		for i, tag in enumerate(TextMarker.btags):
 			text = text.replace(btags2[i], tag)
@@ -61,9 +90,12 @@ class TextMarker(object):
 	@staticmethod
 	def getMarkedText(info):
 		omtext = TextMarker.getOtherTaggedText(info)
+		# print omtext
 		result = ""
 		searchObj = re.findall( r'\[b(.+?)\](.+?)\[e.+?\]', omtext)
+		print len(searchObj)
 		for tup in searchObj:
+			# print tup
 			if (tup[0]=="other"):
 				result += "[%s]%s[%s]" % (tup[0], tup[1], tup[0])
 			else:
@@ -77,5 +109,6 @@ class TextMarker(object):
 	@staticmethod
 	def getTextLabelTuples(info):
 		mtext = TextMarker.getMarkedText(info)
+		# print mtext
 		tuples = re.findall( r'\[(.+?)\](.+?)\[.+?\]', mtext)
 		return tuples

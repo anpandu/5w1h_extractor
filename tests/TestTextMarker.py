@@ -7,7 +7,7 @@ class TestTextMarker:
 
 	@classmethod
 	def setup_class(self):
-		self.info = MDP.get5w1h([6])[1]
+		self.info = MDP.get5w1h([6])[2]
 
 	def test_getTaggedText(self):
 		info = self.info
@@ -54,8 +54,6 @@ class TestTextMarker:
 	def test_getTextLabelTuples(self):
 		info = self.info
 		tuples = TextMarker.getTextLabelTuples(info)
-		for x in tuples:
-			print x
 		assert len(tuples)>0
 		assert tuples[0]
 		assert tuples[1]
