@@ -28,9 +28,9 @@ class TestBaseFeatureExtractor:
         assert BaseFeatureExtractor.prevTokenInSentences("Mama, just", self.paragraph1) == ['_begin_']
 
     def test_nextTokenInSentences(self):
-        assert BaseFeatureExtractor.nextTokenInSentences("all away", self.paragraph1) == ['_end_']
-        assert BaseFeatureExtractor.nextTokenInSentences("he's dead", self.paragraph1) == ['_end_']
-        assert BaseFeatureExtractor.nextTokenInSentences("dead", self.paragraph1) == ['_end_']
+        assert BaseFeatureExtractor.nextTokenInSentences("all away", self.paragraph1) == ['.']
+        assert BaseFeatureExtractor.nextTokenInSentences("he's dead", self.paragraph1) == ['.']
+        assert BaseFeatureExtractor.nextTokenInSentences("dead", self.paragraph1) == ['.']
 
     def test_isIncludingString(self):
         assert BaseFeatureExtractor.isContainingString("ll", "hello") == True

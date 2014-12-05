@@ -15,5 +15,5 @@ class TestInfo5W1H:
     def test_init(self):
         info = Info5W1H(self.what, self.who, self.when, self.where, self.why, self.how, self.text)
         assert info.text == "Mama, just killed a man, Put a gun against his head, Pulled my trigger, now he's dead. Mama, life had just begun, but now I've gone and thrown it all away."
-    	assert info.sentences == ["Mama, just killed a man, Put a gun against his head, Pulled my trigger, now he's dead", "Mama, life had just begun, but now I've gone and thrown it all away"]
-    	assert info.tokenized_sentences == [["Mama", ",", "just", "killed", "a", "man", ",", "Put", "a", "gun", "against", "his", "head", ",", "Pulled", "my", "trigger", ",", "now", "he's", "dead"], ["Mama", ",", "life", "had", "just", "begun", ",", "but", "now", "I've", "gone", "and", "thrown", "it", "all", "away"]]
+    	assert info.sentences == ["Mama, just killed a man, Put a gun against his head, Pulled my trigger, now he's dead.", "Mama, life had just begun, but now I've gone and thrown it all away."]
+    	assert info.tokenized_sentences == [["Mama", ",", "just", "killed", "a", "man", ",", "Put", "a", "gun", "against", "his", "head", ",", "Pulled", "my", "trigger", ",", "now", "he's", "dead", "."], ["Mama", ",", "life", "had", "just", "begun", ",", "but", "now", "I've", "gone", "and", "thrown", "it", "all", "away", "."]]
