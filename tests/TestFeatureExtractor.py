@@ -6,13 +6,21 @@ class TestFeatureExtractor:
 
     @classmethod
     def setup_class(self):
-    	# self.text1 = "Forum Indonesia untuk Transparansi Anggaran (Fitra) telah menduga PT Ghalia Indonesia Printing tak akan berhasil menyelesaikan tender naskah ujian nasional."
     	self.info = MDP.get5w1h([6])[1]
-        pass
+        self.infos =  MDP.get5w1h([6])
+        self.infos2 = []
+        for x in [2]:
+            self.infos2.append(self.infos[x-1])
+        self.infos = self.infos2
 
     def test_getFeature(self):
     	print FeatureExtractor.getFeature("19 Oktober 2014", "")
     	assert 1==1
+
+    def test_getFitursCSV(self):
+        csvstr = FeatureExtractor.getFitursCSV(self.infos)
+        # print csvstr
+        assert 1==1
 
     def test_getFeaturesInSentence(self):
     	lts = TextMarker.getTextLabelTuplesInSentences(self.info)
@@ -40,8 +48,9 @@ class TestFeatureExtractor:
         assert "bef2contextfe" in fword
         assert "bef2morphfe" in fword
         assert "bef2posfe" in fword
+        # assert 1==2
 
-	def test_runCommand(self):
-		command = "echo hahaha"
-		results = FeatureExtractor.runCommand(command)
-		assert results[0]=="hahaha\n"
+    def test_runCommand(self):
+    	command = "echo hahaha"
+    	results = FeatureExtractor.runCommand(command)
+    	assert results[0]=="hahaha\n"

@@ -9,12 +9,7 @@ class Classifier(object):
 
 	@staticmethod
 	def train(info5w1hs):
-		fiturs = []
-		for info in info5w1hs:
-			for tupls in TextMarker.getTextLabelTuplesInSentences(info):
-				featuress = FeatureExtractor.getFeaturesInSentence(tupls)
-				for features in featuress:
-					fiturs.append(features)	
+		fiturs = FeatureExtractor.getFitursFromInfo(info5w1hs)
 		c = nltk.NaiveBayesClassifier.train(fiturs)
 		return {"classifier": c, "fiturs": fiturs}
 

@@ -9,10 +9,9 @@ class TestClassifier:
     def setup_class(self):
         self.infos =  MDP.get5w1h([6])
         self.infos2 = []
-        for x in [2,4,6,7,9,10,13,16,17,18,23,24,27]:
+        for x in [2]:
             self.infos2.append(self.infos[x-1])
         self.infos = self.infos2
-        pass
 
     def test_train(self):
         temp = Classifier.train(self.infos)

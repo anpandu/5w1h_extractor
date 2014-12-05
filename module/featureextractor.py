@@ -1,7 +1,10 @@
 from tokenizer import Tokenizer
+from module.textmarker import TextMarker
+from module.Info5W1H import Info5W1H
 from fe.fe_when import FeatureExtractorWhen
 import subprocess
 import re
+import json
 
 class FeatureExtractor(object):
 
@@ -9,6 +12,32 @@ class FeatureExtractor(object):
 	def getFeature(word, text):
 		fwhen = FeatureExtractorWhen.getFeature(word, "")
 		return fwhen
+
+	@staticmethod
+	def getFitursFromInfo(info5w1hs):
+		fiturs = []
+		for info in info5w1hs:
+			for tupls in TextMarker.getTextLabelTuplesInSentences(info):
+				featuress = FeatureExtractor.getFeaturesInSentence(tupls)
+				for features in featuress:
+					fiturs.append(features)	
+		return fiturs
+
+	@staticmethod
+	def getFitursCSV(info5w1hs):
+		fiturs = FeatureExtractor.getFitursFromInfo(info5w1hs)
+		flatfiturs = [item for item in fiturs]
+		headers = ['tok', 'contextfe', 'morphfe', 'ne', 'posfe', 'tokkind', 'bef1class', 'bef1contextfe', 'bef1morphfe', 'bef1ne', 'bef1posfe', 'bef1tok', 'bef1tokkind', 'bef2class', 'bef2contextfe', 'bef2morphfe', 'bef2ne', 'bef2posfe', 'bef2tok', 'bef2tokkind']
+		separator = ","
+		csvstr = "%s%s\"class\"\n" % (separator.join(headers), separator)
+		for f in flatfiturs:
+			temp = ""
+			for header in headers:
+				temp += "\"%s\"%s" % (f[0][header], separator)
+			temp += '"%s"' % f[1]
+			temp += "\n"
+			csvstr += temp
+		return csvstr
 
 	@staticmethod
 	def getFeaturesInSentence(tuples):
