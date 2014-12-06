@@ -9,12 +9,12 @@ class TestFeatureExtractor:
     	self.info = MDP.get5w1h([6])[1]
         self.infos =  MDP.get5w1h([6])
         self.infos2 = []
-        for x in [2]:
+        for x in [28]:
             self.infos2.append(self.infos[x-1])
         self.infos = self.infos2
 
     def test_getFeature(self):
-    	print FeatureExtractor.getFeature("19 Oktober 2014", "")
+    	# print FeatureExtractor.getFeature("19 Oktober 2014", "")
     	assert 1==1
 
     def test_getFitursCSV(self):

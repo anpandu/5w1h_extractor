@@ -40,9 +40,6 @@ class TestClassifier:
     #     temp = Classifier.train(infos)
     #     c = temp["classifier"]
     #     fiturs = temp["fiturs"]
-    #     # fiturst = [x for x in fiturs if (x[1]=="beg_when" or x[1]=="in_when")]
-    #     # fitursf = [x for x in fiturs if (x[1]!="beg_when" and x[1]!="in_when")]
-
 
     #     fiturs0 = [x for x in fiturs if (x[1]=="other")]
     #     fiturs1 = [x for x in fiturs if (x[1]=="beg_what")]
@@ -67,7 +64,6 @@ class TestClassifier:
     #     # print "False features set =\t %d" % len(fitursf)
     #     # print "True detected as true \t\t %s" % (nltk.classify.accuracy(c, fiturst))
     #     # print "False detected as False \t %s" % (nltk.classify.accuracy(c, fitursf))
-
 
     #     print ''
     #     print "beg_what detected as beg_what \t %s" % (nltk.classify.accuracy(c, fiturs1))

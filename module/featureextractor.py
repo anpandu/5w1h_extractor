@@ -14,9 +14,17 @@ class FeatureExtractor(object):
 		return fwhen
 
 	@staticmethod
+	def _lowerCase(match):
+		match = match.group()
+		return match.lower()
+
+	@staticmethod
 	def getFitursFromInfo(info5w1hs):
 		fiturs = []
 		for info in info5w1hs:
+			# perubahan buat INANLP
+			info.text = re.sub(r'\(([\x00-\x7F]+)\)', FeatureExtractor._lowerCase, info.text)
+			info.text = re.sub(r'\)\s([A-Z]+)', FeatureExtractor._lowerCase, info.text)
 			for tupls in TextMarker.getTextLabelTuplesInSentences(info):
 				featuress = FeatureExtractor.getFeaturesInSentence(tupls)
 				for features in featuress:
@@ -33,8 +41,9 @@ class FeatureExtractor(object):
 		for f in flatfiturs:
 			temp = ""
 			for header in headers:
-				content = f[0][header].replace("\"", "\"\"")
+				content = f[0][header].replace("\"", "\"\\\"\\\"\\\"\"")
 				content = "\"%s\"" % content if ("," in content) else content
+				content = "\"%s\"" % content if ("%" in content) else content
 				temp += "%s%s" % (content, separator)
 			temp += "%s" % f[1]
 			temp += "\n"
