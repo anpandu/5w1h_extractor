@@ -29,12 +29,14 @@ class FeatureExtractor(object):
 		flatfiturs = [item for item in fiturs]
 		headers = ['tok', 'contextfe', 'morphfe', 'ne', 'posfe', 'tokkind', 'bef1class', 'bef1contextfe', 'bef1morphfe', 'bef1ne', 'bef1posfe', 'bef1tok', 'bef1tokkind', 'bef2class', 'bef2contextfe', 'bef2morphfe', 'bef2ne', 'bef2posfe', 'bef2tok', 'bef2tokkind']
 		separator = ","
-		csvstr = "%s%s\"class\"\n" % (separator.join(headers), separator)
+		csvstr = "%s%sclass\n" % (separator.join(["%s" % h for h in headers]), separator)
 		for f in flatfiturs:
 			temp = ""
 			for header in headers:
-				temp += "\"%s\"%s" % (f[0][header], separator)
-			temp += '"%s"' % f[1]
+				content = f[0][header].replace("\"", "\"\"")
+				content = "\"%s\"" % content if ("," in content) else content
+				temp += "%s%s" % (content, separator)
+			temp += "%s" % f[1]
 			temp += "\n"
 			csvstr += temp
 		return csvstr
