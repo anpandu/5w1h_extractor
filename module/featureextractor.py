@@ -25,8 +25,9 @@ class FeatureExtractor(object):
 			# perubahan buat INANLP
 			info.text = re.sub(r'\(([\x00-\x7F]+)\)', FeatureExtractor._lowerCase, info.text)
 			info.text = re.sub(r'\)\s([A-Z]+)', FeatureExtractor._lowerCase, info.text)
-			for tupls in TextMarker.getTextLabelTuplesInSentences(info):
-				featuress = FeatureExtractor.getFeaturesInSentence(tupls)
+			for idxsentence, tupls in enumerate(TextMarker.getTextLabelTuplesInSentences(info)):
+				# print idxsentence
+				featuress = FeatureExtractor.getFeaturesInSentence("%d" % (idxsentence), tupls)
 				for features in featuress:
 					fiturs.append(features)	
 		return fiturs
@@ -35,7 +36,7 @@ class FeatureExtractor(object):
 	def getFitursCSV(info5w1hs):
 		fiturs = FeatureExtractor.getFitursFromInfo(info5w1hs)
 		flatfiturs = [item for item in fiturs]
-		headers = ['tok', 'contextfe', 'morphfe', 'ne', 'posfe', 'tokkind', 'bef1class', 'bef1contextfe', 'bef1morphfe', 'bef1ne', 'bef1posfe', 'bef1tok', 'bef1tokkind', 'bef2class', 'bef2contextfe', 'bef2morphfe', 'bef2ne', 'bef2posfe', 'bef2tok', 'bef2tokkind']
+		headers = ['tok', 'idxsentence', 'contextfe', 'morphfe', 'ne', 'posfe', 'tokkind', 'bef1class', 'bef1idxsentence', 'bef1contextfe', 'bef1morphfe', 'bef1ne', 'bef1posfe', 'bef1tok', 'bef1tokkind', 'bef2class', 'bef2idxsentence', 'bef2contextfe', 'bef2morphfe', 'bef2ne', 'bef2posfe', 'bef2tok', 'bef2tokkind']
 		separator = ","
 		csvstr = "%s%sclass\n" % (separator.join(["%s" % h for h in headers]), separator)
 		for f in flatfiturs:
@@ -51,9 +52,9 @@ class FeatureExtractor(object):
 		return csvstr
 
 	@staticmethod
-	def getFeaturesInSentence(tuples):
+	def getFeaturesInSentence(idxsentence, tuples):
 		featuress = []
-		# print tuples
+		# print [tupl[1] for tupl in tuples]
 		sentence = ' '.join([tupl[1] for tupl in tuples])
 		# print sentence
 		finanlp = FeatureExtractor.runCommand("java -jar module/inanlp/adapter_inanlp.jar '%s'" % sentence)
@@ -62,6 +63,7 @@ class FeatureExtractor(object):
 			regexres = re.findall( r'\[(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\|(.*?)\]', finanlp[idx])[0]
 			# features = FeatureExtractorWhen.getFeature(tup[1], "")
 			features = {}
+			features["idxsentence"] = idxsentence
 			features["tok"] = regexres[0]
 			features["tokkind"] = regexres[1]
 			features["ne"] = regexres[2]
@@ -71,14 +73,16 @@ class FeatureExtractor(object):
 			label = tup[0]
 			featuress.append((features, label))
 			# print features
+			# print tup[1]
 		# print ''
 		bef1featuress = []
 		for i in range(0,len(featuress)):
 			if (i-1>=0):
 				bef1featuress.append(featuress[i-1])
 			else:
-				bef1featuress.append(({'morphfe': '', 'posfe': '', 'ne': 'BEGIN', 'tok': '', 'contextfe': '', 'tokkind': 'BEGIN'}, 'BEGIN'))
+				bef1featuress.append(({'morphfe': '', 'posfe': '', 'ne': 'BEGIN', 'tok': '', 'contextfe': '', 'tokkind': 'BEGIN', 'idxsentence': '0'}, 'BEGIN'))
 		for i in range(0,len(featuress)):
+			featuress[i][0]["bef1idxsentence"] = bef1featuress[i][0]["idxsentence"]
 			featuress[i][0]["bef1tok"] = bef1featuress[i][0]["tok"]
 			featuress[i][0]["bef1tokkind"] = bef1featuress[i][0]["tokkind"]
 			featuress[i][0]["bef1ne"] = bef1featuress[i][0]["ne"]
@@ -91,8 +95,9 @@ class FeatureExtractor(object):
 			if (i-2>=0):
 				bef2featuress.append(featuress[i-2])
 			else:
-				bef2featuress.append(({'morphfe': '', 'posfe': '', 'ne': 'BEGIN', 'tok': '', 'contextfe': '', 'tokkind': 'BEGIN'}, 'BEGIN'))
+				bef2featuress.append(({'morphfe': '', 'posfe': '', 'ne': 'BEGIN', 'tok': '', 'contextfe': '', 'tokkind': 'BEGIN', 'idxsentence': '0'}, 'BEGIN'))
 		for i in range(0,len(featuress)):
+			featuress[i][0]["bef2idxsentence"] = bef2featuress[i][0]["idxsentence"]
 			featuress[i][0]["bef2tok"] = bef2featuress[i][0]["tok"]
 			featuress[i][0]["bef2tokkind"] = bef2featuress[i][0]["tokkind"]
 			featuress[i][0]["bef2ne"] = bef2featuress[i][0]["ne"]
