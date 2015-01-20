@@ -125,8 +125,8 @@ class TextMarker(object):
 			if (i==len(tuples)-1):
 				tupless += [temp]
 			else:
-				# print x
-				if (x[1]=='.' and (tuples[i+1][1][0].isupper() or tuples[i+1][1][0]=='"')):
+				print x
+				if (x[1]=='.' and (tuples[i+1][1][0].isupper() or (tuples[i+1][1][0]=='"' and len(tuples)<i+2))):
 					tupless += [temp]
 					temp = []
 		# for x in tupless:
