@@ -8,6 +8,10 @@ class Tokenizer(object):
 
 	@staticmethod
 	def getTokens(str): # !!! kata 'dan' pas terakhir
+		# bersih2
+		str = str.replace(',"', ', "')
+		str = str.replace('"-', '" -')
+		#
 		rawtokens = str.split(' ')		
 		# split non-alnum first char of token
 		again = True
