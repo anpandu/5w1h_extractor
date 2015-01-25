@@ -19,14 +19,34 @@ class FeatureExtractor(object):
 		return match.lower()
 
 	@staticmethod
+	def _INANLP(info):
+		info.text = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.text)
+		info.text = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.text)
+		info.what = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.what)
+		info.what = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.what)
+		info.who = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.who)
+		info.who = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.who)
+		info.when = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.when)
+		info.when = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.when)
+		info.where = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.where)
+		info.where = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.where)
+		info.why = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.why)
+		info.why = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.why)
+		info.how = re.sub(r'\(([^()]+)\)', FeatureExtractor._lowerCase, info.how)
+		info.how = re.sub(r'\)\s([A-Za-z]+)', FeatureExtractor._lowerCase, info.how)
+		return info
+
+	@staticmethod
 	def getFitursFromInfo(info5w1hs):
 		fiturs = []
 		for info in info5w1hs:
-			# perubahan buat INANLP
-			info.text = re.sub(r'\(([\x00-\x7F]+)\)', FeatureExtractor._lowerCase, info.text)
-			info.text = re.sub(r'\)\s([A-Z]+)', FeatureExtractor._lowerCase, info.text)
+			# print info.text
+			# print ''
+			info = FeatureExtractor._INANLP(info)
+			# print info.text
+			# print ''
 			for idxsentence, tupls in enumerate(TextMarker.getTextLabelTuplesInSentences(info)):
-				# print idxsentence
+				# print tupls
 				featuress = FeatureExtractor.getFeaturesInSentence("%d" % (idxsentence), tupls)
 				for features in featuress:
 					fiturs.append(features)	
@@ -54,7 +74,7 @@ class FeatureExtractor(object):
 	@staticmethod
 	def getFeaturesInSentence(idxsentence, tuples):
 		featuress = []
-		# print [tupl[1] for tupl in tuples]
+		print [tupl[1] for tupl in tuples]
 		sentence = ' '.join([tupl[1] for tupl in tuples])
 		# print sentence
 		finanlp = FeatureExtractor.runCommand("java -jar module/inanlp/adapter_inanlp.jar '%s'" % sentence)
