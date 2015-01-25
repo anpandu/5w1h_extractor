@@ -27,18 +27,29 @@ class TextMarker(object):
 		while '  ' in text:
 			text = text.replace('  ', ' ')
 		temp = []
-		mark = ""
+		mark = []
+		state = 0
 		for te in text.split(' '):
-			if (mark==""):
+			# print mark, te
+			if (len(mark)==0):
 				if (te in TextMarker.btags):
-					mark = TextMarker.etags[TextMarker.btags.index(te)]
+					mark.append(te)
+					state += 1
+				temp.append(te)
 			else:
 				if (te in TextMarker.btags):
-					temp.append(mark)
-					mark=""
+					temp.append(TextMarker.etags[TextMarker.btags.index(mark[-1])])
+					mark.append(te)
+					state += 1
+					temp.append(te)
 				elif(te in TextMarker.etags):
-					mark=""
-			temp.append(te)
+					mark.pop()
+					state -= 1
+					temp.append(te)
+					if (state>0):
+						temp.append(mark[-1])
+				else:
+					temp.append(te)
 		state = 0
 		temp2 = []
 		for te in temp:
@@ -51,6 +62,8 @@ class TextMarker(object):
 					state = 0
 				temp2.append(te)
 		text = ' '.join(temp2)
+		# print text
+		# print ''
 		return text
 
 	@staticmethod
