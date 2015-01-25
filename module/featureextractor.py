@@ -74,7 +74,7 @@ class FeatureExtractor(object):
 	@staticmethod
 	def getFeaturesInSentence(idxsentence, tuples):
 		featuress = []
-		print [tupl[1] for tupl in tuples]
+		# print [tupl[1] for tupl in tuples]
 		sentence = ' '.join([tupl[1] for tupl in tuples])
 		# print sentence
 		finanlp = FeatureExtractor.runCommand("java -jar module/inanlp/adapter_inanlp.jar '%s'" % sentence)
