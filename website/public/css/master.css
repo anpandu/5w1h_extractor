@@ -1,0 +1,13 @@
+body {
+	/*min-height: 2000px;*/
+	padding-top: 100px;
+	padding-bottom: 900px;
+}
+
+a {
+	color: #ff0000;
+}
+
+.row-limit {
+	margin-bottom: 50px;
+}
