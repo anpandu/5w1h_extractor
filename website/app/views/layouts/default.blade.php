@@ -18,7 +18,7 @@
 
         <!-- <div class="navbar navbar-default navbar-fixed-bottom">
 		</div> -->
-				@include('includes.footer')
+			@include('includes.footer')
 
 	</div>
 </body>

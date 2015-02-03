@@ -13,5 +13,5 @@
 
 
 Route::get('/', function() {
-	return View::make('pages.home');
+	return View::make('pages.extractor');
 });

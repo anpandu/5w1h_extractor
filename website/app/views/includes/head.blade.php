@@ -7,9 +7,9 @@
 
 {{ HTML::style('css/master.css') }}
 <!-- load bootstrap -->
-{{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
+{{ HTML::style('packages/bootstrap/css/bootstrap.css') }}
 <!-- Optional theme -->
-{{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
+{{ HTML::style('packages/bootstrap/css/bootstrap-theme.min.css') }}
 <!-- Latest compiled and minified JavaScript -->
 {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
 
