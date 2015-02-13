@@ -11,7 +11,7 @@ public class Extractor {
     public static Map<String, String> getInfo(String _news) {
         Map res = new HashMap<>();
 
-        Tokenizer.getSentences(_news);
+        System.out.println(Tokenizer.removeNonASCII("\u007Fhai\u001F"));
         res.put("news", _news);
         res.put("what", "");
         res.put("who", "");

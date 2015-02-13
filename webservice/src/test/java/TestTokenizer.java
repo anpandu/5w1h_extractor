@@ -24,4 +24,10 @@ public class TestTokenizer {
         assertArrayEquals(Tokenizer.getSentences(sentence1), new String[]{"Forum Indonesia untuk Transparansi Anggaran (Fitra) telah menduga PT Ghalia Indonesia Printing tak akan berhasil menyelesaikan tender naskah ujian nasional.", "Koordinator Investigasi dan Advokasi Uchok Sky Khadafi menilai proses tender perusahaaan tersebut ganjil.", "Ghalia menawarkan harga yang lebih tinggi, Rp 22,8 miliar.", "Namun kementerian Pendidikan dan Kebudayaan tetap memenangkan perusahaan tersebut.", "PT Ghalia Indonesia Printing adalah perusahaan yang mencetak naskah.", "Provinsi tersebut yakni Kalimantan Selatan, Kalimantan Timur, Sulawesi Utara, Sulawesi Tengah, Sulawesi Selatan, Sulawesi Tenggara, Bali, Nusa Tenggara Barat, Nusa Tenggara Timur, Gorontalo, dan Sulawesi Barat.", "Direktur Ghalia, Hamzah Lukman."});
     }
 
+    @Test
+    public void testremoveNonASCII() {
+        String sentence1 = "\u007Fhai\u001F";
+        assertTrue(Tokenizer.removeNonASCII(sentence1).equals("hai"));
+    }
+
 }

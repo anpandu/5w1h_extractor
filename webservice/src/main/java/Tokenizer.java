@@ -84,4 +84,9 @@ public class Tokenizer {
         String[] res3 = res2.toArray(new String[res2.size()]);
         return res3;
     }
+
+    public static String removeNonASCII(String _text) {
+        String res = _text.replaceAll("[^\\x20-\\x7E]", "");
+        return res;
+    }
 }
