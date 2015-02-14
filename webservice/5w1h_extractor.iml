@@ -28,6 +28,7 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-http:9.2.2.v20140723" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-util:9.2.2.v20140723" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-io:9.2.2.v20140723" level="project" />
+    <orderEntry type="library" name="Maven: inanlp:inanlp-adapter:1.0.0" level="project" />
   </component>
 </module>
 
