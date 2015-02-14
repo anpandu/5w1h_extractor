@@ -14,10 +14,12 @@ public class Extractor {
     public static Map<String, String> getInfo(String _news) {
         Map res = new HashMap<>();
 
-        String sentence = StringUtils.join(Tokenizer.getTokens(_news), " ");
-        System.out.println(sentence);
-        LinkedList<Feature> fs = Extractor.getFeatures(sentence);
-        for (Feature f : fs) {System.out.println(f.toCSVString());}
+//        String sentence = StringUtils.join(Tokenizer.getTokens(_news), " ");
+//        System.out.println(sentence);
+//        LinkedList<Feature> fs = Extractor.getFeatures(sentence);
+//        for (Feature f : fs) {System.out.println(f.toCSVString());}
+
+        InfoClassifier.tes();
 
         res.put("news", _news);
         res.put("what", "");
