@@ -20,22 +20,51 @@ public class Extractor {
         LinkedList<Feature> fs = Extractor.getFeatures(sentence);
         for (Feature f : fs) {System.out.println(f.toCSVString());}
 
-//        try {
-//            InfoClassifier ic = new InfoClassifier();
-//            ic.getLabel();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("");
+        
+        String[] infos = Extractor.getInfosFromFeatures(fs);
 
         res.put("news", _news);
-        res.put("what", "");
-        res.put("who", "");
-        res.put("when", "");
-        res.put("where", "");
-        res.put("why", "");
-        res.put("how", "");
+        res.put("what", infos[0]);
+        res.put("who", infos[1]);
+        res.put("when", infos[2]);
+        res.put("where", infos[3]);
+        res.put("why", infos[4]);
+        res.put("how", infos[5]);
 
         System.out.println("");
+        return res;
+    }
+
+    public static String[] getInfosFromFeatures (LinkedList<Feature> _fs) {
+        String[] infos = new String[6];
+        String[] begs = new String[] {"beg_what", "beg_who", "beg_when", "beg_where", "beg_why", "beg_how"};
+        String[] ins = new String[] {"in_what", "in_who", "in_when", "in_where", "in_why", "in_how"};
+        for (int i = 0; i < infos.length; i++) {
+            String info = "";
+            boolean begin = false;
+            boolean hitother = false;
+            for (Feature f : _fs) {
+//                System.out.print(f.getToken());
+                if (f.getLabel().equals(begs[i])&&!hitother) {
+                    begin = true;
+                    info += (begin) ? (" " + f.getToken()) : f.getToken();
+//                    System.out.print(" begin");
+                } else
+                if ((f.getLabel().equals(ins[i]))&&(begin)&&(!hitother)) {
+                    info += (" " + f.getToken());
+//                    System.out.print(" in");
+                } else {
+                    if (begin) {
+                        hitother = true;
+//                        System.out.print(" hitother");
+                    }
+                }
+//                System.out.println("");
+            }
+            infos[i] = info;
+        }
+        String[] res = infos;
         return res;
     }
 

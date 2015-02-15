@@ -43,12 +43,12 @@ public class WebserviceHandler extends AbstractHandler
             JSONObject jsonResult = new JSONObject();
 
             jsonResult.put("news", res.get("news"));
-            jsonResult.put("what", "");
-            jsonResult.put("who", "");
-            jsonResult.put("when", "");
-            jsonResult.put("where", "");
-            jsonResult.put("why", "");
-            jsonResult.put("how", "");
+            jsonResult.put("what", res.get("what"));
+            jsonResult.put("who", res.get("who"));
+            jsonResult.put("when", res.get("when"));
+            jsonResult.put("where", res.get("where"));
+            jsonResult.put("why", res.get("why"));
+            jsonResult.put("how", res.get("how"));
 
             pri.println(jsonResult.toString());
         }
