@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by ananta on 2/13/15.
@@ -94,6 +96,38 @@ public class Tokenizer {
 
     public static String removeNonASCII(String _text) {
         String res = _text.replaceAll("[^\\x20-\\x7E]", "");
+        return res;
+    }
+
+    private static String _lc (String _text) {
+        return _text.toLowerCase();
+    }
+
+    public static String funcAdaptINANLP(String _text) {
+        String res = "";
+        Pattern patt = Pattern.compile("\\(([^()]+)\\)");
+        Matcher m = patt.matcher(_text);
+        StringBuffer sb = new StringBuffer(_text.length());
+        while (m.find()) {
+            String text = m.group(0);
+            m.appendReplacement(sb, _lc(text));
+        }
+        m.appendTail(sb);
+        res = sb.toString();
+        return res;
+    }
+
+    public static String funcAdaptINANLP2(String _text) {
+        String res = "";
+        Pattern patt = Pattern.compile("\\)\\s([A-Za-z]+)");
+        Matcher m = patt.matcher(_text);
+        StringBuffer sb = new StringBuffer(_text.length());
+        while (m.find()) {
+            String text = m.group(0);
+            m.appendReplacement(sb, _lc(text));
+        }
+        m.appendTail(sb);
+        res = sb.toString();
         return res;
     }
 }

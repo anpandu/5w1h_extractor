@@ -14,7 +14,9 @@ public class Extractor {
     public static Map<String, String> getInfo(String _news) throws Exception {
         Map res = new HashMap<>();
 
-        String sentence = StringUtils.join(Tokenizer.getTokens(_news), " ");
+        String news = Tokenizer.funcAdaptINANLP(_news);
+        news = Tokenizer.funcAdaptINANLP2(news);
+        String sentence = StringUtils.join(Tokenizer.getTokens(news), " ");
         sentence = Tokenizer.removeNonASCII(sentence);
         System.out.println(sentence);
         LinkedList<Feature> fs = Extractor.getFeatures(sentence);
