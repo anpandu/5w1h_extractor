@@ -19,7 +19,7 @@ function submitNews() {
 
 function getContent(_news) {
     $.ajax({
-	    url: "http://0.0.0.0:8887/extract?text="+_news,
+	    url: "http://localhost:8887/extract?text="+_news,
 	    type: "GET",
 	    dataType: 'jsonp',
 	    processData: false,
