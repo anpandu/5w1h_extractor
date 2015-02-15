@@ -21,7 +21,7 @@ public class Extractor {
         for (Feature f : fs) {System.out.println(f.toCSVString());}
 
         System.out.println("");
-        
+
         String[] infos = Extractor.getInfosFromFeatures(fs);
 
         res.put("news", _news);

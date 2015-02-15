@@ -22,6 +22,7 @@ public class WebserviceHandler extends AbstractHandler
 
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException
     {
+        response.setContentType("text/plain");
         response.setStatus(HttpServletResponse.SC_OK);
         baseRequest.setHandled(true);
 
@@ -50,7 +51,9 @@ public class WebserviceHandler extends AbstractHandler
             jsonResult.put("why", res.get("why"));
             jsonResult.put("how", res.get("how"));
 
-            pri.println(jsonResult.toString());
+            String result = "jsonCallback({\"info\":" + jsonResult.toString() + "});";
+
+            pri.println(result);
         }
 
     }
