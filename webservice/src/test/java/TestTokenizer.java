@@ -15,7 +15,7 @@ public class TestTokenizer {
 //        System.out.println(Tokenizer.getTokens(sentence3));
         assertArrayEquals(Tokenizer.getTokens(sentence1), new String[] {"hello", "world"});
         assertArrayEquals(Tokenizer.getTokens(sentence2), new String[] {"hello", "world"});
-        assertArrayEquals(Tokenizer.getTokens(sentence3), new String[] {"Hello", "world", ",", "my", "name", "is", "Alice", "(", "123", ")", "."});
+        assertArrayEquals(Tokenizer.getTokens(sentence3), new String[] {"Hello", "world", ",", "my", "name", "is", "Alice", "(", "123.0", ")", "."});
     }
 
     @Test

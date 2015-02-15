@@ -58,7 +58,14 @@ public class Tokenizer {
                 if (rawtoken.length()>1)
                     again = again || !StringUtils.isAlphanumeric(rawtoken.substring(rawtoken.length()-1));
         }
+        // tambah .0
         while (rawtokens.contains("")) rawtokens.remove("");
+        for (int i = 0; i < rawtokens.size(); i++) {
+            String rawtoken = rawtokens.get(i);
+            if (StringUtils.isNumeric(rawtoken))
+                rawtoken = rawtoken + ".0";
+            rawtokens.set(i,rawtoken);
+        }
         res = rawtokens.toArray(new String[rawtokens.size()]);
         return res;
     }
