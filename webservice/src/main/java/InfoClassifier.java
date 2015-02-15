@@ -1,86 +1,66 @@
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
+import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Attribute;
 import weka.core.FastVector;
 import weka.core.Instance;
 import weka.core.Instances;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 /**
  * Created by ananta on 2/14/15.
  */
 public class InfoClassifier {
 
-    public static void tes() {
-        try {
-            // 11111
-            // Declare two numeric attributes
-            Attribute Attribute1 = new Attribute("firstNumeric");
-            Attribute Attribute2 = new Attribute("secondNumeric");
+    String scls1;
+    String scls2;
+    String sdataset;
+    Classifier cls;
+    Instances dataset;
 
-            // Declare a nominal attribute along with its values
-            FastVector fvNominalVal = new FastVector(3);
-            fvNominalVal.addElement("blue");
-            fvNominalVal.addElement("gray");
-            fvNominalVal.addElement("black");
-            Attribute Attribute3 = new Attribute("aNominal", fvNominalVal);
+    public InfoClassifier() throws Exception {
+//        scls1 = "classifier/ibk_smote_J_s2wv.model";
+        scls1 = "classifier/naivebayes_smote/ta_smote_a.model";
+//        scls2 = "classifier/ibk_smote/ibk_smote_a.model";
+//        sdataset = "classifier/J3.arff";
+        sdataset = "classifier/dataset/ta_smote_a.arff";
+//        sdataset = "classifier/dataset/ta_smote_a+b+c+d+e+f+g+h+i+j.arff";
+//        sdataset = "classifier/dataset/taz.arff";
+        cls = (Classifier) weka.core.SerializationHelper.read(scls1);
+        dataset = new Instances(new BufferedReader(new FileReader(sdataset)));
+        dataset.setClassIndex(dataset.numAttributes() - 1);
+    }
 
-            // Declare the class attribute along with its values
-            FastVector fvClassVal = new FastVector(2);
-            fvClassVal.addElement("positive");
-            fvClassVal.addElement("negative");
-            Attribute ClassAttribute = new Attribute("theClass", fvClassVal);
+    public Instance createInstance (Instances _dataset, String[] _attr) {
+        Instance inst = _dataset.instance(0);
+        for (int i = 0; i < _attr.length; i++)
+            inst.setValue(i, _attr[i]);
+        return inst;
+    }
 
-            // Declare the feature vector
-            FastVector fvWekaAttributes = new FastVector(4);
-            fvWekaAttributes.addElement(Attribute1);
-            fvWekaAttributes.addElement(Attribute2);
-            fvWekaAttributes.addElement(Attribute3);
-            fvWekaAttributes.addElement(ClassAttribute);
-
-            // 22222222
-            // Create an empty training set
-            Instances isTrainingSet = new Instances("Rel", fvWekaAttributes, 10);
-            // Set class index
-            isTrainingSet.setClassIndex(3);
-
-            // Create the instance
-            Instance iExample = new Instance(4);
-            iExample.setValue((Attribute)fvWekaAttributes.elementAt(0), 1.0);
-            iExample.setValue((Attribute)fvWekaAttributes.elementAt(1), 0.5);
-            iExample.setValue((Attribute)fvWekaAttributes.elementAt(2), "gray");
-            iExample.setValue((Attribute)fvWekaAttributes.elementAt(3), "positive");
-
-            // add the instance
-            isTrainingSet.add(iExample);
-
-            // Create a naïve bayes classifier
-            Classifier cModel = (Classifier)new NaiveBayes();
-            cModel.buildClassifier(isTrainingSet);
-
-            // 333333333
-            // Test the model
-            Evaluation eTest = new Evaluation(isTrainingSet);
-            eTest.evaluateModel(cModel, isTrainingSet);
-
-            // Print the result à la Weka explorer:
-            String strSummary = eTest.toSummaryString();
-            System.out.println(strSummary);
-
-            // Get the confusion matrix
-            double[][] cmMatrix = eTest.confusionMatrix();
-
-//            // 444444
-//            // Specify that the instance belong to the training set
-//            // in order to inherit from the set description
-//            iUse.setDataset(isTrainingSet);
-//
-//            // Get the likelihood of each classes
-//            // fDistribution[0] is the probability of being “positive”
-//            // fDistribution[1] is the probability of being “negative”
-//            double[] fDistribution = cModel.distributionForInstance(iUse);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public String getLabel(Feature _f) throws Exception {
+//        Instance ie = this.createInstance(dataset,
+//                new String[]{ _f.getToken(),
+//                        _f.getCf(),
+//                        _f.getPf(),
+//                        _f.getBef1().getLabel(),
+//                        _f.getBef1().getPf(),
+//                        _f.getBef1().getToken(),
+//                        _f.getBef2().getLabel(),
+//                        _f.getBef2().getCf(),
+//                        _f.getBef2().getPf(),
+//                        _f.getBef2().getToken()
+//                }
+//        );
+        Instance ie = this.createInstance(dataset,
+                new String[]{ _f.getToken()}
+        );
+        double value = cls.classifyInstance(ie);
+        String prediction = dataset.classAttribute().value((int)value);
+//        System.out.println("The predicted value of instance " + Integer.toString(0) + "\t: " + value + "\t: " + prediction);
+        return prediction;
     }
 }

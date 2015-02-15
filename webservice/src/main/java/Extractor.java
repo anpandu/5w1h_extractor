@@ -11,15 +11,21 @@ import java.util.LinkedList;
  */
 public class Extractor {
 
-    public static Map<String, String> getInfo(String _news) {
+    public static Map<String, String> getInfo(String _news) throws Exception {
         Map res = new HashMap<>();
 
-//        String sentence = StringUtils.join(Tokenizer.getTokens(_news), " ");
-//        System.out.println(sentence);
-//        LinkedList<Feature> fs = Extractor.getFeatures(sentence);
-//        for (Feature f : fs) {System.out.println(f.toCSVString());}
+        String sentence = StringUtils.join(Tokenizer.getTokens(_news), " ");
+        sentence = Tokenizer.removeNonASCII(sentence);
+        System.out.println(sentence);
+        LinkedList<Feature> fs = Extractor.getFeatures(sentence);
+        for (Feature f : fs) {System.out.println(f.toCSVString());}
 
-        InfoClassifier.tes();
+//        try {
+//            InfoClassifier ic = new InfoClassifier();
+//            ic.getLabel();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         res.put("news", _news);
         res.put("what", "");
@@ -33,10 +39,10 @@ public class Extractor {
         return res;
     }
 
-    public static LinkedList<Feature> getFeatures (String _sentence) {
+    public static LinkedList<Feature> getFeatures (String _sentence) throws Exception {
         LinkedList<Feature> bef0features = new LinkedList();
         LinkedList<Feature> bef1features = new LinkedList();
-        LinkedList<Feature> bef2features = new LinkedList();
+
         IndonesianNETagger inner = new IndonesianNETagger();
         String sentence = _sentence;
         inner.setSentence(sentence);
@@ -47,6 +53,7 @@ public class Extractor {
         ArrayList<String> cfs = inner.getContextualFeature();
         ArrayList<String> mfs = inner.getMorphologicalFeature();
         ArrayList<String> pfs = inner.getPOSFeature();
+
         for (int i = 0; i < tokens.size(); i++) {
             String[] item = new String[6];
             item[0] = tokens.get(i);
@@ -58,26 +65,26 @@ public class Extractor {
             Feature fff = new Feature(item[0], item[1], item[2], item[3], item[4], item[5], "1", "BEGIN");
             bef0features.add(fff);
         }
+
         Feature beginFeature = new Feature("?", "BEGIN", "BEGIN", "?", "?", "?", "0", "BEGIN");
+        InfoClassifier ic = new InfoClassifier();
+
         for (int i = 0; i < bef0features.size(); i++) {
             Feature feature = new Feature(bef0features.get(i));
-            if (i<1)
+            if (i<1) {
                 feature.setBef1(beginFeature);
-            else
+                feature.setBef2(beginFeature);
+            } else if (i<2) {
+                feature.setBef1(beginFeature);
+                feature.setBef2(bef1features.get(i-1));
+            } else {
                 feature.setBef1(bef1features.get(i-1));
-            // set class/label here!
+                feature.setBef2(bef1features.get(i-2));
+            }
+            feature.setLabel(ic.getLabel(feature));
             bef1features.add(feature);
         }
-        for (int i = 0; i < bef0features.size(); i++) {
-            Feature feature = new Feature(bef1features.get(i));
-            if (i<2)
-                feature.setBef2(beginFeature);
-            else
-                feature.setBef2(bef2features.get(i-2));
-            // set class/label here!
-            bef2features.add(feature);
-        }
-        LinkedList<Feature> res = new LinkedList(bef2features);
+        LinkedList<Feature> res = new LinkedList(bef1features);
         return res;
     }
 

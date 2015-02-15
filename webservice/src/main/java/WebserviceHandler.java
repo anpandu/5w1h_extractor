@@ -34,7 +34,12 @@ public class WebserviceHandler extends AbstractHandler
         System.out.println(parameterMap);
 
         if (pathInfo.equals("/extract")) {
-            Map<String, String> res = Extractor.getInfo(parameterMap.get("text")[0]);
+            Map<String, String> res = null;
+            try {
+                res = Extractor.getInfo(parameterMap.get("text")[0]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             JSONObject jsonResult = new JSONObject();
 
             jsonResult.put("news", res.get("news"));
