@@ -28,18 +28,23 @@ public class InfoClassifier {
     public InfoClassifier() throws Exception {
 //        scls1 = "classifier/ibk_smote_A_s2wv.model";
 //        scls1 = "classifier/ibk_smote_J_s2wv.model";
-        scls1 = "classifier/naivebayes_smote/ta_smote_a.model";
+//        scls1 = "classifier/naivebayes_smote/ta_smote_a.model";
+
+
+//        sheader = "classifier/A4.arff";
+        sdataset = "classifier/dataset2/ta_smote_a.arff";
+        scls1 = "classifier/exp_model2/ibk_smote/ta_a.model";
+
+        // success
+//        sdataset = "classifier/dataset/ta_smote_a.arff";
 //        scls1 = "classifier/nb_smote_A_s2wv.model";
-//        sdataset = "classifier/J3.arff";
-        sheader = "classifier/A4.arff";
-        sdataset = "classifier/dataset/ta_smote_a.arff";
-//        sdataset = "classifier/dataset/ta_smote_a+b+c+d+e+f+g+h+i+j.arff";
-//        sdataset = "classifier/dataset/taz.arff";
+
+
         cls = (Classifier) weka.core.SerializationHelper.read(scls1);
 
-        fil = new MultiFilter();
+//        fil = new MultiFilter();
 
-        header = new Instances(new BufferedReader(new FileReader(sheader)));
+//        header = new Instances(new BufferedReader(new FileReader(sheader)));
 //        header.setClassIndex(dataset.numAttributes() - 1);
         dataset = new Instances(new BufferedReader(new FileReader(sdataset)));
         dataset.setClassIndex(dataset.numAttributes() - 1);
@@ -68,8 +73,16 @@ public class InfoClassifier {
 //                }
 //        );
         Instance ie = this.createInstance(dataset, dataset,
-                new String[]{ _f.getToken()}
+                new String[]{
+                        _f.getBef1().getClass().getName()
+//                        _f.getIdxsentence(),
+//                        _f.getBef1().getPf(),
+//                        _f.getNe()
+                }
         );
+//        Instance ie = this.createInstance(dataset, dataset,
+//                new String[]{ _f.getToken()}
+//        );
         double value = cls.classifyInstance(ie);
         String prediction = dataset.classAttribute().value((int)value);
 //        System.out.println("The predicted value of instance " + Integer.toString(0) + "\t: " + value + "\t: " + prediction);

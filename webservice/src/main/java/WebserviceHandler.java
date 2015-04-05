@@ -34,26 +34,33 @@ public class WebserviceHandler extends AbstractHandler
         System.out.println(pathInfo);
         System.out.println(parameterMap);
 
-        if (pathInfo.equals("/extract")) {
+        if (pathInfo.equals("/api/json/extract")||pathInfo.equals("/api/jsonp/extract")) {
+
             Map<String, String> res = null;
             try {
                 res = Extractor.getInfo(parameterMap.get("text")[0]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            JSONObject jsonResult = new JSONObject();
 
-            jsonResult.put("news", res.get("news"));
-            jsonResult.put("what", res.get("what"));
-            jsonResult.put("who", res.get("who"));
-            jsonResult.put("when", res.get("when"));
-            jsonResult.put("where", res.get("where"));
-            jsonResult.put("why", res.get("why"));
-            jsonResult.put("how", res.get("how"));
+            JSONObject result = new JSONObject();
+            result.put("news", res.get("news"));
+            result.put("what", res.get("what"));
+            result.put("who", res.get("who"));
+            result.put("when", res.get("when"));
+            result.put("where", res.get("where"));
+            result.put("why", res.get("why"));
+            result.put("how", res.get("how"));
 
-            String result = "jsonCallback({\"info\":" + jsonResult.toString() + "});";
+            String jsonResult = "{\"info\":" + result.toString() + "}";
 
-            pri.println(result);
+            if (pathInfo.equals("/api/json/extract")) {
+                pri.println(jsonResult);
+            } else
+            if (pathInfo.equals("/api/jsonp/extract")) {
+                String jsonpResult = "callback5w1h(" + jsonResult + ");";
+                pri.println(jsonpResult);
+            }
         }
 
     }
