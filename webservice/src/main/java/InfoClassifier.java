@@ -114,17 +114,17 @@ public class InfoClassifier {
 
     public Instance createInstance (Instances _header, Instances _dataset, String[] _attr) {
         Instance inst = _dataset.instance(0);
-//        System.out.println("+"+_attr[4]+"+");
-//        System.out.println("|"+_attr[0]+"|");
-//        System.out.println("|"+_attr[1]+"|");
-//        System.out.println("|"+_attr[2]+"|");
-//        System.out.println("|"+_attr[3]+"|");
-//        System.out.println("");
+        System.out.println("+"+_attr[4]+"+");
+        System.out.println("|"+_attr[0]+"|");
+        System.out.println("|"+_attr[1]+"|");
+        System.out.println("|"+_attr[2]+"|");
+        System.out.println("|"+_attr[3]+"|");
+        System.out.println("");
         inst.setDataset(_header);
         inst.setValue(0, Integer.valueOf(_attr[0]));
-        inst.setValue(1, _attr[1]);
+        if (_attr[1].equals("?")||_attr[1].equals("")) inst.setValue(1,  '?'); else inst.setValue(1,  _attr[1]);
         inst.setValue(2, _attr[2]);
-        inst.setValue(3, _attr[3]);
+        if (_attr[3].equals("?")||_attr[2].equals("")) inst.setValue(3,  '?'); else inst.setValue(3,  _attr[3]);
         return inst;
     }
 
