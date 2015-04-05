@@ -32,8 +32,8 @@ public class InfoClassifier {
 
 
 //        sheader = "classifier/A4.arff";
-        sdataset = "classifier/dataset2/ta_smote_a+b+c+d.arff";
-        scls1 = "classifier/exp_model2/ibk_smote/ta_a+b+c+d.model";
+        sdataset = "classifier/dataset2/ta_a+b+c+d.arff";
+        scls1 = "classifier/exp_model2/ibk_nonsmote/ta_a+b+c+d.model";
 
         // success
 //        sdataset = "classifier/dataset/ta_smote_a.arff";
@@ -124,7 +124,7 @@ public class InfoClassifier {
         inst.setValue(0, Integer.valueOf(_attr[0]));
         if (_attr[1].equals("?")||_attr[1].equals("")) inst.setValue(1,  '?'); else inst.setValue(1,  _attr[1]);
         inst.setValue(2, _attr[2]);
-        if (_attr[3].equals("?")||_attr[2].equals("")) inst.setValue(3,  '?'); else inst.setValue(3,  _attr[3]);
+        if (_attr[3].equals("?")||_attr[3].equals("")) inst.setValue(3,  '?'); else inst.setValue(3,  _attr[3]);
         return inst;
     }
 
