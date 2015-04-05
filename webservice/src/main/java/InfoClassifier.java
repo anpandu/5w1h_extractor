@@ -32,8 +32,8 @@ public class InfoClassifier {
 
 
 //        sheader = "classifier/A4.arff";
-        sdataset = "classifier/dataset2/ta_smote_a.arff";
-        scls1 = "classifier/exp_model2/ibk_smote/ta_a.model";
+        sdataset = "classifier/dataset2/ta_smote_a+b+c+d.arff";
+        scls1 = "classifier/exp_model2/ibk_smote/ta_a+b+c+d.model";
 
         // success
 //        sdataset = "classifier/dataset/ta_smote_a.arff";
@@ -50,11 +50,81 @@ public class InfoClassifier {
         dataset.setClassIndex(dataset.numAttributes() - 1);
     }
 
+//    public Instance createI (Instances _header, Instances _dataset, String[] _attr) {
+//
+//        FastVector fvbef1class = new FastVector(14);
+//        fvbef1class.addElement("BEGIN");
+//        fvbef1class.addElement("beg_what");
+//        fvbef1class.addElement("in_what");
+//        fvbef1class.addElement("beg_who");
+//        fvbef1class.addElement("in_who");
+//        fvbef1class.addElement("beg_when");
+//        fvbef1class.addElement("in_when");
+//        fvbef1class.addElement("beg_where");
+//        fvbef1class.addElement("in_where");
+//        fvbef1class.addElement("beg_why");
+//        fvbef1class.addElement("in_why");
+//        fvbef1class.addElement("beg_how");
+//        fvbef1class.addElement("in_how");
+//        fvbef1class.addElement("other");
+//        Attribute Attribute1 = new Attribute("bef1class", fvbef1class);
+//
+//        Attribute Attribute2 = new Attribute("idxsentence");
+//
+//        // Declare the class attribute along with its values
+//        FastVector fvClassVal = new FastVector(13);
+//        fvClassVal.addElement("beg_what");
+//        fvClassVal.addElement("in_what");
+//        fvClassVal.addElement("beg_who");
+//        fvClassVal.addElement("in_who");
+//        fvClassVal.addElement("beg_when");
+//        fvClassVal.addElement("in_when");
+//        fvClassVal.addElement("beg_where");
+//        fvClassVal.addElement("in_where");
+//        fvClassVal.addElement("beg_why");
+//        fvClassVal.addElement("in_why");
+//        fvClassVal.addElement("beg_how");
+//        fvClassVal.addElement("in_how");
+//        fvClassVal.addElement("other");
+//        Attribute ClassAttribute = new Attribute("class", fvClassVal);
+//
+//        // Declare the feature vector
+//        FastVector fvWekaAttributes = new FastVector(4);
+//        fvWekaAttributes.addElement(Attribute1);
+//        fvWekaAttributes.addElement(Attribute2);
+////        fvWekaAttributes.addElement(Attribute3);
+//        fvWekaAttributes.addElement(ClassAttribute);
+//
+//        // Create an empty training set
+//        Instances isTrainingSet = new Instances("Rel", fvWekaAttributes, 10);
+//        // Set class index
+//        isTrainingSet.setClassIndex(3);
+//
+//        // Create the instance
+//        Instance inst = new Instance(3);
+////        System.out.println("");
+////        System.out.println(fvWekaAttributes);
+////        System.out.println("");
+//        inst.setDataset(isTrainingSet);
+//        inst.setValue(0, _attr[0]);
+//        inst.setValue(1, Integer.valueOf(_attr[1]));
+//        inst.setValue(2, _attr[2]);
+//        return inst;
+//    }
+
     public Instance createInstance (Instances _header, Instances _dataset, String[] _attr) {
         Instance inst = _dataset.instance(0);
-        for (int i = 0; i < _attr.length; i++)
-            inst.setValue(i, _attr[i]);
+//        System.out.println("+"+_attr[4]+"+");
+//        System.out.println("|"+_attr[0]+"|");
+//        System.out.println("|"+_attr[1]+"|");
+//        System.out.println("|"+_attr[2]+"|");
+//        System.out.println("|"+_attr[3]+"|");
+//        System.out.println("");
         inst.setDataset(_header);
+        inst.setValue(0, Integer.valueOf(_attr[0]));
+        inst.setValue(1, _attr[1]);
+        inst.setValue(2, _attr[2]);
+        inst.setValue(3, _attr[3]);
         return inst;
     }
 
@@ -74,10 +144,10 @@ public class InfoClassifier {
 //        );
         Instance ie = this.createInstance(dataset, dataset,
                 new String[]{
-                        _f.getBef1().getClass().getName()
-//                        _f.getIdxsentence(),
-//                        _f.getBef1().getPf(),
-//                        _f.getNe()
+                        _f.getIdxsentence(),
+                        _f.getNe(),
+                        _f.getBef1().getLabel(),
+                        _f.getBef1().getPf(),_f.getToken()
                 }
         );
 //        Instance ie = this.createInstance(dataset, dataset,
